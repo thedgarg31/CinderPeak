@@ -1,7 +1,7 @@
 # CinderPeak
+CinderPeak is a high-performance, modern C++ graph library designed to support directed, undirected, and mixed graphs with customizable vertex and edge types. The library will feature an integrated visualization engine using SFML (Simple and Fast Multimedia Library) to provide graph rendering. CinderPeak aims to be a comprehensive tool for graph theory applications, offering both algorithmic functionality and visual insights.
 
-
-
+<!-- 
 ## Getting started
 
 To make it easy for you to get started with GitLab, here's a list of recommended next steps.
@@ -90,4 +90,4 @@ Show your appreciation to those who have contributed to the project.
 For open source projects, say how it is licensed.
 
 ## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers. -->
