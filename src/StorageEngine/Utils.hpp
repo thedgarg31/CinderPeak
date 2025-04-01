@@ -44,16 +44,16 @@ struct VertexHasher<T, std::enable_if_t<std::is_class_v<T> &&
 };
 template <typename T>
 struct EdgeHasher<
-T, std::enable_if_t<std::is_integral_v<T> || std::is_floating_point_v<T> ||
-std::is_same_v<T, std::string>>> {
+    T, std::enable_if_t<std::is_integral_v<T> || std::is_floating_point_v<T> ||
+                        std::is_same_v<T, std::string>>> {
   std::size_t operator()(const T &v) const { return std::hash<T>{}(v); }
 };
-//pair hasher for future use.
-template <typename VertexType, typename EdgeType>
-struct PairHasher {
-    std::size_t operator()(const std::pair<VertexType, EdgeType> &p) const {
-        return VertexHasher<VertexType>{}(p.first) ^ (EdgeHasher<EdgeType>{}(p.second) << 1);
-    }
+// pair hasher for future use.
+template <typename VertexType, typename EdgeType> struct PairHasher {
+  std::size_t operator()(const std::pair<VertexType, EdgeType> &p) const {
+    return VertexHasher<VertexType>{}(p.first) ^
+           (EdgeHasher<EdgeType>{}(p.second) << 1);
+  }
 };
 
 namespace PeakStore {
