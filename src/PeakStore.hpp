@@ -30,6 +30,9 @@ namespace CinderPeak
         adjacency_storage =
             std::make_unique<AdjacencyList<VertexType, EdgeType>>(graph_metadata, create_options);
       }
+      void buildStructures(){
+        
+      }
     };
 
   } // namespace PeakStore

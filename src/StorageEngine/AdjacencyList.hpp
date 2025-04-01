@@ -3,7 +3,11 @@
 namespace CinderPeak {
 namespace PeakStore {
 template <typename VertexType, typename EdgeType> class AdjacencyList {
-    public:
+private:
+  std::unordered_map<VertexType, std::vector<std::pair<VertexType, EdgeType>>, VertexHasher<VertexType>>
+      _adj_list;
+
+public:
   std::shared_ptr<GraphInternalMetadata> graph_metadata = nullptr;
   std::shared_ptr<GraphCreationOptions> create_options = nullptr;
 
