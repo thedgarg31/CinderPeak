@@ -1,4 +1,5 @@
 #include "StorageEngine/AdjacencyList.hpp"
+#include "StorageEngine/ErrorCodes.hpp"
 #include "StorageEngine/HybridCSR_COO.hpp"
 #include "StorageEngine/Utils.hpp"
 #include <iostream>
@@ -35,7 +36,12 @@ public:
     adjacency_storage->impl_addEdge(src, dest);
   }
   EdgeType getEdge(const VertexType &src, const VertexType &dest) {
-    return adjacency_storage->impl_getEdge(src, dest);
+    auto peakResponse = adjacency_storage->impl_getEdge(src, dest);
+    if (!peakResponse.second.isOK()) {
+      std::cout << peakResponse.second.message() << "\n";
+      return EdgeType();
+    }
+    return peakResponse.first;
   }
   void addVertex(const VertexType &src) {
     adjacency_storage->impl_addVertex(src);

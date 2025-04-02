@@ -29,17 +29,19 @@ public:
     _adj_list[src] = std::vector<std::pair<VertexType, EdgeType>>();
     std::cout << "Vertex addition success\n";
   }
-  const EdgeType impl_getEdge(const VertexType &src,
-                              const VertexType &dest) const {
+  const std::pair<EdgeType, PeakStatus>
+  impl_getEdge(const VertexType &src, const VertexType &dest) const {
     auto it = _adj_list.find(src);
-    if (it != _adj_list.end()) {
-      for (const auto &neighbor : it->second) {
-        if (neighbor.first == dest) {
-          return neighbor.second;
-        }
+    if (it == _adj_list.end()) {
+      return std::make_pair(EdgeType(), PeakStatus::VertexNotFound());
+    }
+
+    for (const auto &[neighbor, edge] : it->second) {
+      if (neighbor == dest) {
+        return std::make_pair(edge, PeakStatus::OK());
       }
     }
-    throw std::runtime_error("Edge not found"); // Handle missing edge
+    return std::make_pair(EdgeType(), PeakStatus::EdgeNotFound());
   }
 
   const std::vector<std::pair<VertexType, EdgeType>> &

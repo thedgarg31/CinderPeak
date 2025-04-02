@@ -1,8 +1,10 @@
 #pragma once
+#include "ErrorCodes.hpp"
 #include <bitset>
 #include <iostream>
 #include <memory>
 #include <unordered_map>
+#include <utility>
 #include <vector>
 namespace CinderPeak {
 class GraphCreationOptions {
