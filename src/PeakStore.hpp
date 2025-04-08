@@ -28,12 +28,17 @@ public:
     adjacency_storage = std::make_unique<AdjacencyList<VertexType, EdgeType>>(
         graph_metadata, create_options);
   }
-  void addEdge(const VertexType &src, const VertexType &dest,
+  PeakStatus addEdge(const VertexType &src, const VertexType &dest,
                const EdgeType &weight) {
-    adjacency_storage->impl_addEdge(src, dest, weight);
+    
+    PeakStatus adj_response = adjacency_storage->impl_addEdge(src, dest, weight);
+    if(adj_response.isOK()) graph_metadata->num_edges++;
+    return adj_response;
   }
-  void addEdge(const VertexType &src, const VertexType &dest) {
-    adjacency_storage->impl_addEdge(src, dest);
+  PeakStatus addEdge(const VertexType &src, const VertexType &dest) {
+    PeakStatus adj_response = adjacency_storage->impl_addEdge(src, dest);
+    if(adj_response.isOK()) graph_metadata->num_edges++;
+    return adj_response;
   }
   EdgeType getEdge(const VertexType &src, const VertexType &dest) {
     auto peakResponse = adjacency_storage->impl_getEdge(src, dest);
