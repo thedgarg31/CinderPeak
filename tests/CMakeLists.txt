@@ -8,12 +8,19 @@ find_package(GTest QUIET)
 
 if (NOT GTest_FOUND)
     message(STATUS "GTest not found. Fetching GoogleTest...")
-    
+
     FetchContent_Declare(
         googletest
         URL https://github.com/google/googletest/archive/refs/tags/v1.14.0.zip
     )
     FetchContent_MakeAvailable(googletest)
+
+    # Explicitly declare GTest::GTest if it's fetched
+    if (NOT TARGET GTest::GTest)
+        add_library(GTest::GTest INTERFACE)
+        target_include_directories(GTest::GTest INTERFACE ${googletest_SOURCE_DIR}/googletest/include)
+        target_include_directories(GTest::GTest INTERFACE ${googletest_SOURCE_DIR}/googlemock/include)
+    endif()
 endif()
 
 enable_testing()
