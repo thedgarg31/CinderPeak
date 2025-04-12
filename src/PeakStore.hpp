@@ -7,7 +7,9 @@
 #include <type_traits>
 #include <vector>
 namespace CinderPeak {
+
 namespace PeakStore {
+
 const CinderPeak::GraphCreationOptions
     DEFAULT_GRAPH_OPTIONS({CinderPeak::GraphCreationOptions::Directed,
                            CinderPeak::GraphCreationOptions::SelfLoops});

@@ -43,7 +43,6 @@ public:
     if (it == _adj_list.end()) {
       return std::make_pair(EdgeType(), PeakStatus::VertexNotFound());
     }
-
     for (const auto &[neighbor, edge] : it->second) {
       if (neighbor == dest) {
         return std::make_pair(edge, PeakStatus::OK());

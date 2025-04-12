@@ -1,0 +1,15 @@
+#include "Utils.hpp"
+
+namespace CinderPeak {
+namespace PeakStore {
+template <typename VertexType, typename EdgeType> class CoordinateList {
+public:
+  std::shared_ptr<GraphInternalMetadata> graph_metadata = nullptr;
+  std::shared_ptr<GraphCreationOptions> create_options = nullptr;
+  std::unique_ptr<AdjacencyList<VertexType, EdgeType>> adjacency_storage =
+      nullptr;
+  CoordinateList
+};
+} // namespace PeakStore
+
+} // namespace CinderPeak

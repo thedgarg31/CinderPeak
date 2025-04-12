@@ -16,11 +16,6 @@ public:
   std::vector<const VertexType *> coo_dest_ptrs;
   std::vector<const EdgeType *> coo_weight_ptrs;
 
-  std::vector<std::tuple<const VertexType*, const VertexType*, const EdgeType*>> PBuf_pending_additions_w;
-  std::vector<std::tuple<const VertexType*, const VertexType*, const EdgeType*>> PBuf_pending_additions;
-  std::vector<std::tuple<const VertexType*, const VertexType*>> PBuf_pending_deletions;
-
-
   HybridCSR_COO(const std::shared_ptr<GraphInternalMetadata> &metadata,
                 const std::shared_ptr<GraphCreationOptions> &options)
       : graph_metadata(metadata), graph_options(options) {}
@@ -53,18 +48,20 @@ public:
       }
       ++row;
     }
-    csr_row_offsets[row] = total_edges; 
+    csr_row_offsets[row] = total_edges;
   }
-  void impl_addEdgePointer(const VertexType* src, const VertexType* dest, const EdgeType* weight){
-    PBuf_pending_additions_w.emplace_back(src, dest, weight);
+  void impl_addEdgePointer(const VertexType *src, const VertexType *dest,
+                           const EdgeType *weight) {
+    // PBuf_pending_additions_w.emplace_back(src, dest, weight);
   }
-  void impl_addEdgePointer(const VertexType* src, const VertexType* dest){
-    PBuf_pending_additions.emplace_back(src, dest);
+  void impl_addEdgePointer(const VertexType *src, const VertexType *dest) {
+    // PBuf_pending_additions.emplace_back(src, dest);
   }
-  //we dont have to worry about the weightedness here as the PeakStore will be an mediatery and will call
-  //this method appropriately only if the graph is weighted.
-  void impl_removeEdgePointer(const VertexType* src, const VertexType* dest){
-    PBuf_pending_deletions.emplace_back(src, dest);
+  // we dont have to worry about the weightedness here as the PeakStore will be
+  // an mediatery and will call this method appropriately only if the graph is
+  // weighted.
+  void impl_removeEdgePointer(const VertexType *src, const VertexType *dest) {
+    // PBuf_pending_deletions.emplace_back(src, dest);
   }
   bool hasOption(GraphCreationOptions::GraphType opt) const {
     return graph_options && graph_options->hasOption(opt);
