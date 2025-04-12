@@ -3,7 +3,7 @@ stages:
   - test
 
 default:
-  image: gcc:12  # You can change this to any image with g++, cmake, and make support
+  image: gcc:12
 
 variables:
   BUILD_DIR: build
@@ -11,15 +11,12 @@ variables:
 before_script:
   - apt-get update -y
   - apt-get install -y cmake git libgtest-dev build-essential
-
-  # Compile GTest (libgtest-dev only installs source)
   - cd /usr/src/gtest
   - cmake .
   - make
   - cp lib/*.a /usr/lib
-  - cd $CI_PROJECT_DIR  # Return to the project root
+  - cd $CI_PROJECT_DIR
 
-# Job to build the project
 build_job:
   stage: build
   script:
@@ -34,8 +31,10 @@ build_job:
     paths:
       - $BUILD_DIR
     expire_in: 1 week
+  when: manual
+  only:
+    - merge_requests 
 
-# Job to run tests
 test_job:
   stage: test
   dependencies:
@@ -43,4 +42,7 @@ test_job:
   script:
     - echo "Running tests..."
     - cd $BUILD_DIR
-    - ./tests/tests  # This assumes your main test binary is located here
+    - ./tests/tests
+  when: manual 
+  only:
+    - merge_requests
