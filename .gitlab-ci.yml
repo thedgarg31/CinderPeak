@@ -5,6 +5,9 @@ stages:
 # Job to compile the code using CMake
 build_job:
   stage: build
+  before_script:
+    - apt-get update -y  # Update the package list
+    - apt-get install -y cmake  # Install cmake
   script:
     - echo "Creating build directory..."
     - mkdir build
