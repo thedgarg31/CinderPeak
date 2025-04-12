@@ -43,4 +43,4 @@ test_job:
   script:
     - echo "Running tests..."
     - cd $BUILD_DIR
-    - ./test/test  # This assumes your main test binary is located here
+    - ./test/tests  # This assumes your main test binary is located here
