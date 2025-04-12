@@ -1,0 +1,31 @@
+stages:
+  - build
+  - test
+
+# Job to compile the code using CMake
+build_job:
+  stage: build
+  script:
+    - echo "Creating build directory..."
+    - mkdir build
+    - cd build
+    - echo "Running CMake configuration..."
+    - cmake .. -DBUILD_TESTS=ON -DBUILD_EXAMPLES=ON  
+    - echo "Building the project..."
+    - cmake --build .  
+  artifacts:
+    paths:
+      - build/  
+    expire_in: 1 week  # Optional: Set expiration for the build artifacts
+
+# Job to run the tests
+test_job:
+  stage: test
+  script:
+    - echo "Running tests..."
+    - cd build
+    - make test  # Assuming you have a test target in your Makefile or CMakeLists.txt
+  dependencies:
+    - build_job  # This ensures tests only run after a successful build
+  only:
+    - main  # Optional: Run only on the main branch, or remove this for all branches
