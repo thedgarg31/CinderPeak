@@ -2,33 +2,45 @@ stages:
   - build
   - test
 
-# Job to compile the code using CMake
+default:
+  image: gcc:12  # You can change this to any image with g++, cmake, and make support
+
+variables:
+  BUILD_DIR: build
+
+before_script:
+  - apt-get update -y
+  - apt-get install -y cmake git libgtest-dev build-essential
+
+  # Compile GTest (libgtest-dev only installs source)
+  - cd /usr/src/gtest
+  - cmake .
+  - make
+  - cp lib/*.a /usr/lib
+  - cd $CI_PROJECT_DIR  # Return to the project root
+
+# Job to build the project
 build_job:
   stage: build
-  before_script:
-    - apt-get update -y  # Update the package list
-    - apt-get install -y cmake  # Install cmake
   script:
     - echo "Creating build directory..."
-    - mkdir build
-    - cd build
+    - mkdir -p $BUILD_DIR
+    - cd $BUILD_DIR
     - echo "Running CMake configuration..."
-    - cmake .. -DBUILD_TESTS=ON -DBUILD_EXAMPLES=ON  
+    - cmake .. -DBUILD_TESTS=ON -DBUILD_EXAMPLES=ON
     - echo "Building the project..."
-    - cmake --build .  
+    - cmake --build .
   artifacts:
     paths:
-      - build/  
-    expire_in: 1 week  # Optional: Set expiration for the build artifacts
+      - $BUILD_DIR
+    expire_in: 1 week
 
-# Job to run the tests
+# Job to run tests
 test_job:
   stage: test
+  dependencies:
+    - build_job
   script:
     - echo "Running tests..."
-    - cd build
-    - make test  # Assuming you have a test target in your Makefile or CMakeLists.txt
-  dependencies:
-    - build_job  # This ensures tests only run after a successful build
-  only:
-    - main  # Optional: Run only on the main branch, or remove this for all branches
+    - cd $BUILD_DIR
+    - ./test/test  # This assumes your main test binary is located here
