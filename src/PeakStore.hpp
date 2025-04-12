@@ -7,7 +7,6 @@
 #include <type_traits>
 #include <vector>
 namespace CinderPeak {
-
 namespace PeakStore {
 
 const CinderPeak::GraphCreationOptions
