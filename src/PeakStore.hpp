@@ -21,29 +21,28 @@ public:
   PeakStore(const GraphInternalMetadata &metadata,
             const GraphCreationOptions &options = DEFAULT_GRAPH_OPTIONS) {
     ctx = std::make_shared<GraphContext<VertexType, EdgeType>>();
-    ctx->graph_metadata = std::make_shared<GraphInternalMetadata>(metadata);
+    ctx->metadata = std::make_shared<GraphInternalMetadata>(metadata);
     ctx->create_options = std::make_shared<GraphCreationOptions>(options);
     ctx->hybrid_storage =
-        std::make_shared<HybridCSR_COO<VertexType, EdgeType>>(ctx);
+        std::make_shared<HybridCSR_COO<VertexType, EdgeType>>();
     ctx->adjacency_storage =
-        std::make_shared<AdjacencyList<VertexType, EdgeType>>(ctx);
+        std::make_shared<AdjacencyList<VertexType, EdgeType>>();
     ctx->coordinate_list =
-        std::make_shared<CoordinateList<VertexType, EdgeType>>(ctx);
+        std::make_shared<CoordinateList<VertexType, EdgeType>>();
     // ctx->hybrid_storage->impl_buildStructures(adjacency_storage);
   }
   PeakStatus addEdge(const VertexType &src, const VertexType &dest,
                      const EdgeType &weight) {
-
     PeakStatus adj_response =
         ctx->adjacency_storage->impl_addEdge(src, dest, weight);
     if (adj_response.isOK())
-      ctx->graph_metadata->num_edges++;
+      ctx->metadata->num_edges++;
     return adj_response;
   }
   PeakStatus addEdge(const VertexType &src, const VertexType &dest) {
     PeakStatus adj_response = ctx->adjacency_storage->impl_addEdge(src, dest);
     if (adj_response.isOK())
-      ctx->graph_metadata->num_edges++;
+      ctx->metadata->num_edges++;
     return adj_response;
   }
   EdgeType getEdge(const VertexType &src, const VertexType &dest) {
@@ -54,8 +53,18 @@ public:
     }
     return peakResponse.first;
   }
-  void addVertex(const VertexType &src) {
-    ctx->adjacency_storage->impl_addVertex(src);
+  PeakStatus addVertex(const VertexType &src) {
+    if (ctx->metadata->graph_type == "graph_matrix") {
+      if (PeakStatus resp = ctx->coordinate_list->impl_addVertex(src);
+          !resp.isOK())
+        return resp;
+    } else if (ctx->metadata->graph_type == "graph_list") {
+      if (PeakStatus resp = ctx->adjacency_storage->impl_addVertex(src);
+          !resp.isOK())
+        return resp;
+    }
+    ctx->metadata->num_vertices++;
+    return PeakStatus::OK();
   }
   const std::pair<std::vector<std::pair<VertexType, EdgeType>>, PeakStatus>
   getNeighbors(const VertexType &src) const {

@@ -10,12 +10,11 @@ private:
                      VertexHasher<VertexType>>
       _adj_list;
 
-  std::shared_ptr<GraphContext<VertexType, EdgeType>> ctx = nullptr;
 
 public:
   // TODO: combine two impl_addEdge overloads into one.
-  AdjacencyList(const std::shared_ptr<GraphContext<VertexType, EdgeType>> &ctx)
-      : ctx(ctx) {}
+  // AdjacencyList(const std::shared_ptr<GraphContext<VertexType, EdgeType>> &ctx)
+  //     : ctx(ctx) {}
   AdjacencyList() {}
   PeakStatus impl_addEdge(const VertexType &src, const VertexType &dest,
                           const EdgeType &weight) {

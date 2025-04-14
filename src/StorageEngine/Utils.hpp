@@ -66,13 +66,17 @@ public:
   size_t num_edges;
   size_t num_self_loops;
   size_t num_parallel_edges;
-  GraphInternalMetadata() {
+  const std::string graph_type;
+  GraphInternalMetadata(const std::string &graph_type)
+      : graph_type(graph_type) {
     num_vertices = 0;
     num_edges = 0;
     density = 0;
     num_self_loops = 0;
     num_parallel_edges = 0;
   }
+  // default ctor for basic testing, this has to be removed later on.
+  GraphInternalMetadata() {}
 };
 } // namespace PeakStore
 

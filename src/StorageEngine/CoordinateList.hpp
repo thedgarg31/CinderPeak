@@ -12,12 +12,10 @@ private:
   std::vector<VertexType> coo_src;
   std::vector<VertexType> coo_dest;
   std::vector<EdgeType> coo_weights;
-  std::shared_ptr<GraphContext<VertexType, EdgeType>> ctx;
   std::unordered_set<VertexType, VertexHasher<VertexType>> vertices;
 
 public:
-  CoordinateList(const std::shared_ptr<GraphContext<VertexType, EdgeType>> &ctx)
-      : ctx(ctx) {
+  CoordinateList(){
     impl_BuildCoordinateList();
   }
   void impl_BuildCoordinateList() {
