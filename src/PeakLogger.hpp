@@ -11,17 +11,17 @@
 #define COLOR_RESET "\033[0m"
 #define COLOR_WHITE "\033[37m"
 #define COLOR_BOLD_WHITE "\033[1;37m"
-#define COLOR_TRACE "\033[90m"   // Bright black / grey
-#define COLOR_DEBUG "\033[36m"   // Cyan
-#define COLOR_INFO "\033[32m"    // Green
-#define COLOR_WARNING "\033[33m" // Yellow
-#define COLOR_ERROR "\033[31m"   // Red
-#define COLOR_CRITICAL "\033[1;31m"  // Bold Red
+#define COLOR_TRACE "\033[90m"   
+#define COLOR_DEBUG "\033[36m"   
+#define COLOR_INFO "\033[32m"    
+#define COLOR_WARNING "\033[33m" 
+#define COLOR_ERROR "\033[31m"   
+#define COLOR_CRITICAL "\033[1;31m"  
 #define COLOR_BOLD_DEBUG "\033[1;36m"
 #define COLOR_BOLD_INFO "\033[1;32m"
 #define COLOR_BOLD_WARN "\033[1;33m"
 #define COLOR_BOLD_ERROR "\033[1;31m"
-#define COLOR_BOLD_CRIT "\033[1;91m"  // Bright red
+#define COLOR_BOLD_CRIT "\033[1;91m" 
 
 enum class LogLevel { TRACE, DEBUG, INFO, WARNING, ERROR, CRITICAL };
 
@@ -100,13 +100,11 @@ private:
 
     std::lock_guard<std::mutex> lock(logMutex);
 
-    // Prepare the log message components
     std::string timestamp = getTimestamp();
     const char* levelStr = levelToString(level);
     const char* levelColor = levelToColor(level);
 
     if (enableConsoleLogging) {
-      // Console output with colors
       std::cerr << COLOR_BOLD_WHITE << "[" << COLOR_RESET << timestamp 
                 << COLOR_BOLD_WHITE << "] [" << COLOR_RESET << levelColor 
                 << levelStr << COLOR_RESET << COLOR_BOLD_WHITE << "]" 
@@ -123,7 +121,6 @@ private:
     if (enableFileLogging) {
       ensureFileOpen();
       if (logFile.is_open()) {
-        // File output without colors
         logFile << "[" << timestamp << "] [" << levelStr << "] " << msg;
         
         if (!file.empty() && line != -1) {
@@ -136,7 +133,6 @@ private:
   }
 };
 
-// -------- Logging Macros --------
 #define LOG_TRACE(msg) Logger::log(LogLevel::TRACE, msg)
 #define LOG_DEBUG(msg) Logger::log(LogLevel::DEBUG, msg)
 #define LOG_INFO(msg) Logger::log(LogLevel::INFO, msg)
