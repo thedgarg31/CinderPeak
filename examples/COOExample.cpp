@@ -1,3 +1,4 @@
+#include <iostream>
 #include "PeakStore.hpp"
 
 using namespace CinderPeak::PeakStore;
@@ -24,6 +25,8 @@ int main()
   store.ctx->coordinate_list->impl_addEdge(3,4,3);
   store.ctx->coordinate_list->impl_addEdge(4,1,4);
 
+  auto resp = store.ctx->coordinate_list->impl_getEdge(1,2);
+  std::cout << resp.second << "\n";
   
   return 0;
 
