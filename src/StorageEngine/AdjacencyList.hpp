@@ -3,18 +3,18 @@
 #include "Utils.hpp"
 #include <memory>
 namespace CinderPeak {
+  template <typename, typename>
+class PeakStorageInterface;
+
 namespace PeakStore {
-template <typename VertexType, typename EdgeType> class AdjacencyList {
+template <typename VertexType, typename EdgeType> 
+class AdjacencyList : public CinderPeak::PeakStorageInterface<VertexType, EdgeType>{
 private:
   std::unordered_map<VertexType, std::vector<std::pair<VertexType, EdgeType>>,
                      VertexHasher<VertexType>>
       _adj_list;
-
-
 public:
   // TODO: combine two impl_addEdge overloads into one.
-  // AdjacencyList(const std::shared_ptr<GraphContext<VertexType, EdgeType>> &ctx)
-  //     : ctx(ctx) {}
   AdjacencyList() {}
   PeakStatus impl_addEdge(const VertexType &src, const VertexType &dest,
                           const EdgeType &weight) {
@@ -33,7 +33,7 @@ public:
     _adj_list[src].emplace_back(dest, EdgeType());
     return PeakStatus::OK();
   }
-  const PeakStatus impl_addVertex(const VertexType &src) {
+  PeakStatus impl_addVertex(const VertexType &src) {
     _adj_list[src] = std::vector<std::pair<VertexType, EdgeType>>();
     return PeakStatus::OK();
   }
@@ -60,6 +60,9 @@ public:
     return std::make_pair(it->second, CinderPeak::PeakStatus::OK());
   }
   const auto &getAdjList() { return _adj_list; }
+  void exc() const override{
+    std::cout << "Meow\n";
+  }
 };
 } // namespace PeakStore
 

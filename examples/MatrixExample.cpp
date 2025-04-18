@@ -3,6 +3,22 @@
 #include "GraphMatrix.hpp"
 using namespace CinderPeak::PeakStore;
 using namespace CinderPeak;
+
+class Vertex : public CinderVertex
+{
+  int data;
+
+public:
+  Vertex() {}
+  
+};
+class Edge : public CinderEdge
+{
+  int dd;
+
+public:
+  Edge() {}
+};
 int main()
 {
   GraphCreationOptions options({GraphCreationOptions::Directed,
@@ -10,9 +26,12 @@ int main()
                                 GraphCreationOptions::SelfLoops});
   GraphInternalMetadata metadata;
 
-  GraphMatrix<int, int> gm(options);
-  gm.greet();
-  gm.addVertex(1);
-  return 0;
+  GraphMatrix<Vertex, Edge> gm(options);
 
+  Vertex v;
+  gm.greet();
+  gm.addVertex(v);
+  gm.addVertex(v);
+  // Vertex vv(v);
+  return 0;
 }

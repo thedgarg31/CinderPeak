@@ -1,10 +1,15 @@
 #pragma once
 #include "StorageEngine/GraphContext.hpp"
+// #include "StorageInterface.hpp"
 #include "Utils.hpp"
 #include <memory>
 namespace CinderPeak {
+  template <typename, typename>
+class PeakStorageInterface;
+
 namespace PeakStore {
-template <typename VertexType, typename EdgeType> class HybridCSR_COO {
+template <typename VertexType, typename EdgeType> 
+class HybridCSR_COO : public CinderPeak::PeakStorageInterface<VertexType, EdgeType>{
 private:
   // std::shared_ptr<GraphContext<VertexType, EdgeType>> ctx;
   std::vector<size_t> csr_row_offsets;
@@ -17,6 +22,9 @@ private:
 
 public:
   HybridCSR_COO() {}
+  void exc() const override{
+    std::cout << "Meow\n";
+  }
   // void impl_buildStructures(
   //     const std::unique_ptr<AdjacencyList<VertexType, EdgeType>>
   //         &adj_storage_obj) {

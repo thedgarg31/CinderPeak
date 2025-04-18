@@ -22,6 +22,9 @@ public:
   void greet() { std::cout << "\nHello from GraphMatrix\n"; }
   void addVertex(const VertexType &src) {
     auto resp = peak_store->addVertex(src);
+    if (!resp.isOK()) {
+      std::cout << resp.message() << "\n";
+    }
     std::cout << "vertex addition success\n";
   }
 };

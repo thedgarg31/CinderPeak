@@ -25,9 +25,13 @@ public:
     vertices.clear();
   }
   PeakStatus impl_addVertex(const VertexType &vertex) {
-    vertices.insert(vertex);
+    auto [_, inserted] = vertices.insert(vertex);
+    if (!inserted) {
+        return PeakStatus::AlreadyExists();
+    }
     return PeakStatus::OK();
   }
+
   PeakStatus impl_addEdge(const VertexType &src, const VertexType &dest) {
     EdgeType defaultWeight = EdgeType();
     return impl_addEdge(src, dest, defaultWeight);

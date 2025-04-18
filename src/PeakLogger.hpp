@@ -11,23 +11,23 @@
 #define COLOR_RESET "\033[0m"
 #define COLOR_WHITE "\033[37m"
 #define COLOR_BOLD_WHITE "\033[1;37m"
-#define COLOR_TRACE "\033[90m"   
-#define COLOR_DEBUG "\033[36m"   
-#define COLOR_INFO "\033[32m"    
-#define COLOR_WARNING "\033[33m" 
-#define COLOR_ERROR "\033[31m"   
-#define COLOR_CRITICAL "\033[1;31m"  
+#define COLOR_TRACE "\033[90m"
+#define COLOR_DEBUG "\033[36m"
+#define COLOR_INFO "\033[32m"
+#define COLOR_WARNING "\033[33m"
+#define COLOR_ERROR "\033[31m"
+#define COLOR_CRITICAL "\033[1;31m"
 #define COLOR_BOLD_DEBUG "\033[1;36m"
 #define COLOR_BOLD_INFO "\033[1;32m"
 #define COLOR_BOLD_WARN "\033[1;33m"
 #define COLOR_BOLD_ERROR "\033[1;31m"
-#define COLOR_BOLD_CRIT "\033[1;91m" 
+#define COLOR_BOLD_CRIT "\033[1;91m"
 
 enum class LogLevel { TRACE, DEBUG, INFO, WARNING, ERROR, CRITICAL };
 
 class Logger {
 public:
-  inline static bool enableConsoleLogging = true;
+  inline static bool enableConsoleLogging = false;
   inline static bool enableFileLogging = false;
   inline static std::string logFileName = "peak_logs.log";
 
@@ -53,25 +53,39 @@ private:
 
   static const char *levelToString(LogLevel level) {
     switch (level) {
-    case LogLevel::TRACE: return "TRACE";
-    case LogLevel::DEBUG: return "DEBUG";
-    case LogLevel::INFO: return "INFO";
-    case LogLevel::WARNING: return "WARN";
-    case LogLevel::ERROR: return "ERROR";
-    case LogLevel::CRITICAL: return "CRITICAL";
-    default: return "UNKNOWN";
+    case LogLevel::TRACE:
+      return "TRACE";
+    case LogLevel::DEBUG:
+      return "DEBUG";
+    case LogLevel::INFO:
+      return "INFO";
+    case LogLevel::WARNING:
+      return "WARN";
+    case LogLevel::ERROR:
+      return "ERROR";
+    case LogLevel::CRITICAL:
+      return "CRITICAL";
+    default:
+      return "UNKNOWN";
     }
   }
 
   static const char *levelToColor(LogLevel level) {
     switch (level) {
-    case LogLevel::TRACE: return COLOR_TRACE;
-    case LogLevel::DEBUG: return COLOR_BOLD_DEBUG;
-    case LogLevel::INFO: return COLOR_BOLD_INFO;
-    case LogLevel::WARNING: return COLOR_BOLD_WARN;
-    case LogLevel::ERROR: return COLOR_BOLD_ERROR;
-    case LogLevel::CRITICAL: return COLOR_BOLD_CRIT;
-    default: return COLOR_WHITE;
+    case LogLevel::TRACE:
+      return COLOR_TRACE;
+    case LogLevel::DEBUG:
+      return COLOR_BOLD_DEBUG;
+    case LogLevel::INFO:
+      return COLOR_BOLD_INFO;
+    case LogLevel::WARNING:
+      return COLOR_BOLD_WARN;
+    case LogLevel::ERROR:
+      return COLOR_BOLD_ERROR;
+    case LogLevel::CRITICAL:
+      return COLOR_BOLD_CRIT;
+    default:
+      return COLOR_WHITE;
     }
   }
 
@@ -79,7 +93,8 @@ private:
     auto now = std::chrono::system_clock::now();
     auto t_c = std::chrono::system_clock::to_time_t(now);
     auto ms = std::chrono::duration_cast<std::chrono::milliseconds>(
-                  now.time_since_epoch()) % 1000;
+                  now.time_since_epoch()) %
+              1000;
 
     std::ostringstream oss;
     oss << std::put_time(std::localtime(&t_c), "%Y-%m-%d %H:%M:%S") << '.'
@@ -101,17 +116,17 @@ private:
     std::lock_guard<std::mutex> lock(logMutex);
 
     std::string timestamp = getTimestamp();
-    const char* levelStr = levelToString(level);
-    const char* levelColor = levelToColor(level);
+    const char *levelStr = levelToString(level);
+    const char *levelColor = levelToColor(level);
 
     if (enableConsoleLogging) {
-      std::cerr << COLOR_BOLD_WHITE << "[" << COLOR_RESET << timestamp 
-                << COLOR_BOLD_WHITE << "] [" << COLOR_RESET << levelColor 
-                << levelStr << COLOR_RESET << COLOR_BOLD_WHITE << "]" 
+      std::cerr << COLOR_BOLD_WHITE << "[" << COLOR_RESET << timestamp
+                << COLOR_BOLD_WHITE << "] [" << COLOR_RESET << levelColor
+                << levelStr << COLOR_RESET << COLOR_BOLD_WHITE << "]"
                 << COLOR_RESET << " " << msg;
 
       if (!file.empty() && line != -1) {
-        std::cerr << COLOR_WHITE << " (" << file << ":" << line << ")" 
+        std::cerr << COLOR_WHITE << " (" << file << ":" << line << ")"
                   << COLOR_RESET;
       }
 
@@ -122,11 +137,11 @@ private:
       ensureFileOpen();
       if (logFile.is_open()) {
         logFile << "[" << timestamp << "] [" << levelStr << "] " << msg;
-        
+
         if (!file.empty() && line != -1) {
           logFile << " (" << file << ":" << line << ")";
         }
-        
+
         logFile << std::endl;
       }
     }
