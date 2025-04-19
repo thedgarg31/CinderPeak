@@ -33,7 +33,7 @@ public:
     _adj_list[src].emplace_back(dest, EdgeType());
     return PeakStatus::OK();
   }
-  PeakStatus impl_addVertex(const VertexType &src) {
+  const PeakStatus impl_addVertex(const VertexType &src) {
     _adj_list[src] = std::vector<std::pair<VertexType, EdgeType>>();
     return PeakStatus::OK();
   }
@@ -60,7 +60,7 @@ public:
     return std::make_pair(it->second, CinderPeak::PeakStatus::OK());
   }
   const auto &getAdjList() { return _adj_list; }
-  void exc() const override{
+  void exc() const{
     std::cout << "Meow\n";
   }
 };

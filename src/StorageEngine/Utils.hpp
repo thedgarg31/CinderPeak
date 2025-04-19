@@ -1,5 +1,6 @@
 #pragma once
 #include "ErrorCodes.hpp"
+#include "CinderExceptions.hpp"
 #include <bitset>
 #include <iostream>
 #include <memory>
@@ -9,6 +10,8 @@
 #include <random>
 #include <chrono>
 #include <sstream>
+#include <map>
+#include <functional>
 namespace CinderPeak
 {
   class GraphCreationOptions
@@ -167,5 +170,21 @@ namespace CinderPeak
       GraphInternalMetadata() {}
     };
   } // namespace PeakStore
+  namespace Exceptions {
+    inline void handle_exception_map(const PeakStatus& status) {
+      switch (static_cast<int>(status.code())) {  
+      //not needed, not severe, breaks the program.
+        // case static_cast<int>(StatusCode::VERTEX_ALREADY_EXISTS): 
+      //     throw DuplicateVertexException("Vertex Already Exists");
+      //     break;
+      case static_cast<int>(StatusCode::NOT_FOUND): 
+          std::cout << "Not Found!" << std::endl;
+          break;
+      default:
+          std::cout << "Default case!" << std::endl;
+          break;
+      }
+  }
+}
 
 } // namespace CinderPeak

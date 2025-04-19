@@ -30,15 +30,14 @@ public:
     ctx->coordinate_list =
         std::make_shared<CoordinateList<VertexType, EdgeType>>();
     Logger::enableConsoleLogging = true;
-    if(ctx->metadata->graph_type == "graph_matrix"){
+    if (ctx->metadata->graph_type == "graph_matrix") {
       ctx->active_storage = ctx->hybrid_storage;
       LOG_DEBUG("Set active storage to Hybrid Storage.");
-    }else if(ctx->metadata->graph_type == "graph_list"){
+    } else if (ctx->metadata->graph_type == "graph_list") {
       ctx->active_storage = ctx->adjacency_storage;
       LOG_DEBUG("Set active storage to Adjacency Storage.");
     }
     LOG_INFO("Susseccfully initialized context object");
-
   }
   PeakStatus addEdge(const VertexType &src, const VertexType &dest,
                      const EdgeType &weight) {
@@ -68,17 +67,9 @@ public:
   }
   PeakStatus addVertex(const VertexType &src) {
     LOG_INFO("Called peakStore:addVertex");
-    if (ctx->metadata->graph_type == "graph_matrix") {
-      LOG_INFO("Called matrix:graph_type: graph_matrix");
-      if (PeakStatus resp = ctx->coordinate_list->impl_addVertex(src);
+      if (PeakStatus resp = ctx->active_storage->impl_addVertex(src);
           !resp.isOK())
         return resp;
-    } else if (ctx->metadata->graph_type == "graph_list") {
-      LOG_INFO("Called adjacency:graph_type: graph_list");
-      if (PeakStatus resp = ctx->adjacency_storage->impl_addVertex(src);
-          !resp.isOK())
-        return resp;
-    }
     ctx->metadata->num_vertices++;
     return PeakStatus::OK();
   }

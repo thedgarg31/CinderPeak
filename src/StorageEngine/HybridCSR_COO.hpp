@@ -22,8 +22,13 @@ private:
 
 public:
   HybridCSR_COO() {}
-  void exc() const override{
+  void exc() const {
     std::cout << "Meow\n";
+  }
+  const PeakStatus impl_addVertex(const VertexType& src){
+    std::cout << "Meow from hybrid storage\n";
+    LOG_INFO("Inside Adjacency List addVertex");
+    return PeakStatus::OK();
   }
   // void impl_buildStructures(
   //     const std::unique_ptr<AdjacencyList<VertexType, EdgeType>>

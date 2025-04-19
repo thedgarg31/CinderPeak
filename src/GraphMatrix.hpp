@@ -19,13 +19,13 @@ public:
         CinderPeak::PeakStore::PeakStore<VertexType, EdgeType>>(metadata,
                                                                 options);
   }
-  void greet() { std::cout << "\nHello from GraphMatrix\n"; }
   void addVertex(const VertexType &src) {
     auto resp = peak_store->addVertex(src);
-    if (!resp.isOK()) {
-      std::cout << resp.message() << "\n";
+    if(!resp.isOK()){
+      Exceptions::handle_exception_map(resp);
+      return ;
     }
-    std::cout << "vertex addition success\n";
+    
   }
 };
 } // namespace CinderPeak

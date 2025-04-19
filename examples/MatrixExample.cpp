@@ -10,7 +10,6 @@ class Vertex : public CinderVertex
 
 public:
   Vertex() {}
-  
 };
 class Edge : public CinderEdge
 {
@@ -29,9 +28,16 @@ int main()
   GraphMatrix<Vertex, Edge> gm(options);
 
   Vertex v;
-  gm.greet();
-  gm.addVertex(v);
-  gm.addVertex(v);
+  // try
+  // {
+    gm.addVertex(v);
+    gm.addVertex(v);
+  // }
+  // catch (const GraphException &e)
+  // {
+  //   std::cerr << e.what() << '\n';
+  // }
+
   // Vertex vv(v);
   return 0;
 }
