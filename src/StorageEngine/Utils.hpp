@@ -24,6 +24,7 @@ namespace CinderPeak
       Weighted,
       SelfLoops,
       ParallelEdges,
+      Undirected,
     };
     GraphCreationOptions(std::initializer_list<GraphType> graph_types)
     {
@@ -193,7 +194,13 @@ namespace CinderPeak
       case static_cast<int>(StatusCode::VERTEX_ALREADY_EXISTS):
         LOG_INFO("Vertex Already Exists");
         break;
-      default:
+      case static_cast<int>(StatusCode::VERTEX_NOT_FOUND):
+        LOG_ERROR("Vertex does not exist");
+        break;
+      case static_cast<int>(StatusCode::EDGE_ALREADY_EXISTS):
+        LOG_INFO("Edge Already Exists");
+        break;
+        default:
         LOG_CRITICAL("Unhandled Exception Occurred");
         break;
       }

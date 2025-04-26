@@ -16,11 +16,10 @@ const CinderPeak::GraphCreationOptions
     DEFAULT_GRAPH_OPTIONS({CinderPeak::GraphCreationOptions::Directed,
                            CinderPeak::GraphCreationOptions::SelfLoops});
 template <typename VertexType, typename EdgeType> class PeakStore {
-public:
-  std::shared_ptr<GraphContext<VertexType, EdgeType>> ctx = nullptr;
-  PeakStore(const GraphInternalMetadata &metadata,
-            const GraphCreationOptions &options = DEFAULT_GRAPH_OPTIONS) {
-    ctx = std::make_shared<GraphContext<VertexType, EdgeType>>();
+private:
+  std::shared_ptr<GraphContext<VertexType, EdgeType>> ctx;
+  void initializeContext(const GraphInternalMetadata &metadata,
+                         const GraphCreationOptions &options) {
     ctx->metadata = std::make_shared<GraphInternalMetadata>(metadata);
     ctx->create_options = std::make_shared<GraphCreationOptions>(options);
     ctx->hybrid_storage =
@@ -29,16 +28,29 @@ public:
         std::make_shared<AdjacencyList<VertexType, EdgeType>>();
     ctx->coordinate_list =
         std::make_shared<CoordinateList<VertexType, EdgeType>>();
-    Logger::enableConsoleLogging = true;
+
     if (ctx->metadata->graph_type == "graph_matrix") {
-      ctx->active_storage = ctx->hybrid_storage;
-      LOG_DEBUG("Set active storage to Hybrid Storage.");
+      ctx->active_storage = ctx->adjacency_storage;
+      LOG_DEBUG("Set active storage to Adjacency Storage (matrix).");
     } else if (ctx->metadata->graph_type == "graph_list") {
       ctx->active_storage = ctx->adjacency_storage;
-      LOG_DEBUG("Set active storage to Adjacency Storage.");
+      LOG_DEBUG("Set active storage to Adjacency Storage (list).");
+    } else {
+      LOG_WARNING(
+          "Unknown graph type. Defaulting active storage to adjacency list.");
+      ctx->active_storage = ctx->adjacency_storage;
     }
-    LOG_INFO("Susseccfully initialized context object");
   }
+
+public:
+  PeakStore(const GraphInternalMetadata &metadata,
+            const GraphCreationOptions &options = DEFAULT_GRAPH_OPTIONS)
+      : ctx(std::make_shared<GraphContext<VertexType, EdgeType>>()) {
+    Logger::enableConsoleLogging = true;
+    initializeContext(metadata, options);
+    LOG_INFO("Successfully initialized context object.");
+  }
+
   PeakStatus addEdge(const VertexType &src, const VertexType &dest,
                      const EdgeType &weight) {
 
@@ -47,6 +59,7 @@ public:
         !status.isOK()) {
       return status;
     }
+    ctx->metadata->num_edges++;
     return PeakStatus::OK();
   }
   PeakStatus addEdge(const VertexType &src, const VertexType &dest) {
@@ -55,16 +68,16 @@ public:
         !status.isOK()) {
       return status;
     }
+    ctx->metadata->num_edges++;
     return PeakStatus::OK();
   }
-  EdgeType getEdge(const VertexType &src, const VertexType &dest) {
+  std::pair<EdgeType, PeakStatus> getEdge(const VertexType &src, const VertexType &dest) {
     LOG_INFO("Called adjacency:getEdge()");
     auto peakResponse = ctx->adjacency_storage->impl_getEdge(src, dest);
     if (!peakResponse.second.isOK()) {
-      std::cout << peakResponse.second.message() << "\n";
-      return EdgeType();
+      return {EdgeType(), peakResponse.second};
     }
-    return peakResponse.first;
+    return peakResponse;
   }
   PeakStatus addVertex(const VertexType &src) {
     LOG_INFO("Called peakStore:addVertex");
@@ -82,6 +95,10 @@ public:
       std::cout << peakResponse.second.message() << "\n";
     }
     return peakResponse;
+  }
+  const std::shared_ptr<GraphContext<VertexType, EdgeType>> &
+  getContext() const {
+    return ctx;
   }
 };
 

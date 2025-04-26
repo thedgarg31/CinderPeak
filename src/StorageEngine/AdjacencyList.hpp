@@ -15,7 +15,9 @@ private:
       _adj_list;
 public:
   // TODO: combine two impl_addEdge overloads into one.
-  AdjacencyList() {}
+  AdjacencyList() {
+    LOG_INFO("Initialized Adjacency List object");
+  }
   const PeakStatus impl_addEdge(const VertexType &src, const VertexType &dest,
                           const EdgeType &weight) {
     if (auto it = _adj_list.find(src); it == _adj_list.end())

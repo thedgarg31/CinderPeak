@@ -21,7 +21,10 @@ namespace CinderPeak
       std::unordered_map<VertexType, size_t, VertexHasher<VertexType>> vertex_to_index;
 
     public:
-      HybridCSR_COO() = default;
+      HybridCSR_COO()
+      {
+        LOG_INFO("Initialized CSR object");
+      };
 
       const PeakStatus impl_addVertex(const VertexType &vtx) override
       {
@@ -53,11 +56,13 @@ namespace CinderPeak
 
         return PeakStatus::OK();
       }
-      const PeakStatus impl_addEdge(const VertexType& src, const VertexType& dest)override{
+      const PeakStatus impl_addEdge(const VertexType &src, const VertexType &dest) override
+      {
         LOG_WARNING("Called an Unimplemented method");
         return PeakStatus::MethodNotImplemented();
-      } 
-      const PeakStatus impl_addEdge(const VertexType& src, const VertexType& dest, const EdgeType &weight) override{
+      }
+      const PeakStatus impl_addEdge(const VertexType &src, const VertexType &dest, const EdgeType &weight) override
+      {
         LOG_WARNING("Called an Unimplemented method");
         return PeakStatus::MethodNotImplemented();
       }
