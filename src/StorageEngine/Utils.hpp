@@ -25,6 +25,7 @@ namespace CinderPeak
       SelfLoops,
       ParallelEdges,
       Undirected,
+      Unweighted,
     };
     GraphCreationOptions(std::initializer_list<GraphType> graph_types)
     {
@@ -105,9 +106,11 @@ namespace CinderPeak
     ss << "_" << duration;
     return ss.str();
   }
-  template<typename Tp>
-  bool isTypePrimitive(){
-    if constexpr (!is_primitive_or_string_v<Tp>) {
+  template <typename T>
+  bool isTypePrimitive()
+  {
+    if constexpr (is_primitive_or_string_v<T>)
+    {
       return true;
     }
     return false;
@@ -175,8 +178,10 @@ namespace CinderPeak
       size_t num_self_loops;
       size_t num_parallel_edges;
       const std::string graph_type;
-      GraphInternalMetadata(const std::string &graph_type)
-          : graph_type(graph_type)
+      bool is_vertex_type_primitive;
+      bool is_edge_type_primitive;
+      GraphInternalMetadata(const std::string &graph_type, bool vertex_tp_p, bool edge_tp_p)
+          : graph_type(graph_type), is_vertex_type_primitive(vertex_tp_p), is_edge_type_primitive(edge_tp_p)
       {
         num_vertices = 0;
         num_edges = 0;

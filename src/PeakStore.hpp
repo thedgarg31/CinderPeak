@@ -67,6 +67,9 @@ public:
     return PeakStatus::OK();
   }
   PeakStatus addEdge(const VertexType &src, const VertexType &dest) {
+    if(ctx->active_storage->impl_doesEdgeExist(src, dest)){
+      return PeakStatus::EdgeAlreadyExists();
+    }
     LOG_INFO("Called unweighted PeakStore:addEdge");
     if (auto status = ctx->active_storage->impl_addEdge(src, dest);
         !status.isOK()) {

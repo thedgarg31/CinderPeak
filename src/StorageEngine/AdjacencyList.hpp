@@ -36,9 +36,29 @@ public:
     return PeakStatus::OK();
   }
   const PeakStatus impl_addVertex(const VertexType &src) override {
+    if constexpr (is_primitive_or_string_v<VertexType>) {
+        auto it = _adj_list.find(src);
+        if (it != _adj_list.end()) {
+            LOG_WARNING("Vertex already exists with primitive type");
+            return PeakStatus::VertexAlreadyExists("Primitive Vertex Already Exists");
+        }
+        LOG_DEBUG("Unmatched vertices");
+        LOG_INFO("Inside primitive block");
+    } else {
+        auto it = _adj_list.find(src);
+        if (it != _adj_list.end()) {
+            const VertexType& existingVertex = it->first;
+            if (existingVertex.__id_ == src.__id_) {
+              LOG_DEBUG("Matching vertex IDs");
+              return PeakStatus::VertexAlreadyExists("Non Primitive Vertex Already Exists");
+            }
+        }
+        LOG_INFO("Inside non primitive block");
+    }
     _adj_list[src] = std::vector<std::pair<VertexType, EdgeType>>();
     return PeakStatus::OK();
-  }
+}
+
   const std::pair<EdgeType, PeakStatus>
   impl_getEdge(const VertexType &src, const VertexType &dest) override {
     auto it = _adj_list.find(src);
@@ -64,7 +84,7 @@ public:
   const auto &getAdjList() { return _adj_list; }
   void exc() const { std::cout << "Meow\n"; }
   bool impl_doesEdgeExist(const VertexType &src, const VertexType &dest,
-                          const EdgeType &weight) override {
+                          const EdgeType &weight = EdgeType()) override {
     auto it = _adj_list.find(src);
     if (it == _adj_list.end()) {
       return false;

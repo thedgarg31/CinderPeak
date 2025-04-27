@@ -6,7 +6,7 @@ using namespace CinderPeak;
 
 class Vertex : public CinderVertex
 {
-  public:
+public:
   int data;
 
 public:
@@ -14,7 +14,7 @@ public:
 };
 class Edge : public CinderEdge
 {
-  public:
+public:
   int dd;
 
 public:
@@ -25,7 +25,7 @@ int main()
   GraphCreationOptions options({GraphCreationOptions::Undirected,
                                 GraphCreationOptions::Weighted,
                                 GraphCreationOptions::SelfLoops});
-  GraphInternalMetadata metadata;
+  GraphInternalMetadata metadata("graph_matrix", isTypePrimitive<Vertex>(), isTypePrimitive<Edge>());
 
   GraphMatrix<Vertex, Edge> gm(options);
 
@@ -35,6 +35,7 @@ int main()
   e.dd = 1290;
   // try
   // {
+  gm.addVertex(v1);
   gm.addVertex(v1);
   gm.addVertex(v2);
   gm.addEdge(v1, v2, e);

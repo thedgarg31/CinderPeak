@@ -8,7 +8,7 @@ int main()
   GraphCreationOptions options({GraphCreationOptions::Directed,
                                 GraphCreationOptions::Weighted,
                                 GraphCreationOptions::SelfLoops});
-  GraphInternalMetadata metadata;
+  GraphInternalMetadata metadata("graph_matrix", false, false);
   // metadata.num_edges = 4;s
   // metadata.num_vertices = 2;
 
