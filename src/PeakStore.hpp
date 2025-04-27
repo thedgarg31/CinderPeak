@@ -53,7 +53,11 @@ public:
 
   PeakStatus addEdge(const VertexType &src, const VertexType &dest,
                      const EdgeType &weight) {
-
+    if (ctx->active_storage->impl_doesEdgeExist(src, dest, weight)) {
+      LOG_DEBUG("Edge already exists");
+      if (!ctx->create_options->hasOption(GraphCreationOptions::ParallelEdges))
+        return PeakStatus::EdgeAlreadyExists();
+    }
     LOG_INFO("Called weighted PeakStore:addEdge");
     if (auto status = ctx->active_storage->impl_addEdge(src, dest, weight);
         !status.isOK()) {
@@ -71,13 +75,14 @@ public:
     ctx->metadata->num_edges++;
     return PeakStatus::OK();
   }
-  std::pair<EdgeType, PeakStatus> getEdge(const VertexType &src, const VertexType &dest) {
+  std::pair<EdgeType, PeakStatus> getEdge(const VertexType &src,
+                                          const VertexType &dest) {
     LOG_INFO("Called adjacency:getEdge()");
-    auto peakResponse = ctx->adjacency_storage->impl_getEdge(src, dest);
-    if (!peakResponse.second.isOK()) {
-      return {EdgeType(), peakResponse.second};
+    auto status = ctx->adjacency_storage->impl_getEdge(src, dest);
+    if (!status.second.isOK()) {
+      return {EdgeType(), status.second};
     }
-    return peakResponse;
+    return status;
   }
   PeakStatus addVertex(const VertexType &src) {
     LOG_INFO("Called peakStore:addVertex");
@@ -90,11 +95,11 @@ public:
   const std::pair<std::vector<std::pair<VertexType, EdgeType>>, PeakStatus>
   getNeighbors(const VertexType &src) const {
     LOG_INFO("Called adjacency:getNeighbors()");
-    auto peakResponse = ctx->adjacency_storage->impl_getNeighbors(src);
-    if (!peakResponse.second.isOK()) {
-      std::cout << peakResponse.second.message() << "\n";
+    auto status = ctx->adjacency_storage->impl_getNeighbors(src);
+    if (!status.second.isOK()) {
+      std::cout << status.second.message() << "\n";
     }
-    return peakResponse;
+    return status;
   }
   const std::shared_ptr<GraphContext<VertexType, EdgeType>> &
   getContext() const {

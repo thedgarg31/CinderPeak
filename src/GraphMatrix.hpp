@@ -63,7 +63,7 @@ public:
   EdgeType getEdge(const VertexType &src, const VertexType &dest) {
     LOG_INFO("Called getEdge");
     auto [data, status] = peak_store->getEdge(src, dest);
-    if(!status.isOK()){
+    if (!status.isOK()) {
       Exceptions::handle_exception_map(status);
       return EdgeType();
     }

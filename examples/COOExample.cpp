@@ -26,7 +26,7 @@ int main()
   store.getContext()->coordinate_list->impl_addEdge(4,1,4);
 
   auto resp = store.getContext()->coordinate_list->impl_getEdge(1,2);
-  std::cout << resp.second << "\n";
+  std::cout << resp.first << "\n";
   
   return 0;
 

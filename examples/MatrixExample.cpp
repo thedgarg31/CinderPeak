@@ -38,6 +38,7 @@ int main()
   gm.addVertex(v1);
   gm.addVertex(v2);
   gm.addEdge(v1, v2, e);
+  gm.addEdge(v1, v2, e);
   Edge edge = gm.getEdge(v1, v2);
   std::cout << "MEOW: " << edge.dd << "\n";
   // }

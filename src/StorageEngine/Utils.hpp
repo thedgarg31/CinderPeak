@@ -79,6 +79,15 @@ namespace CinderPeak
              (EdgeHasher<EdgeType>{}(p.second) << 1);
     }
   };
+  template <typename T>
+  struct is_primitive_or_string : std::disjunction<
+                                      std::is_arithmetic<T>,
+                                      std::is_same<T, std::string>>
+  {
+  };
+  template <typename T>
+  inline constexpr bool is_primitive_or_string_v = is_primitive_or_string<T>::value;
+
   std::string __generate_vertex_name()
   {
     std::random_device rd;
@@ -95,6 +104,13 @@ namespace CinderPeak
     auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(now.time_since_epoch()).count();
     ss << "_" << duration;
     return ss.str();
+  }
+  template<typename Tp>
+  bool isTypePrimitive(){
+    if constexpr (!is_primitive_or_string_v<Tp>) {
+      return true;
+    }
+    return false;
   }
   class CinderVertex
   {
@@ -200,7 +216,7 @@ namespace CinderPeak
       case static_cast<int>(StatusCode::EDGE_ALREADY_EXISTS):
         LOG_INFO("Edge Already Exists");
         break;
-        default:
+      default:
         LOG_CRITICAL("Unhandled Exception Occurred");
         break;
       }
