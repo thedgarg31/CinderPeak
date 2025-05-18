@@ -9,14 +9,19 @@ variables:
   BUILD_DIR: build
 
 before_script:
-  - apt-get update -y
-  - apt-get install -y cmake git libgtest-dev build-essential libsfml-dev
-  - cd /usr/src/gtest
-  - cmake .
-  - make
-  - cp lib/*.a /usr/lib
+  - apt-get update -qq && apt-get install -y -qq
+    wget cmake g++
+    libopenal-dev libflac-dev libvorbis-dev
+    libudev-dev libxrandr-dev
+    libfreetype6-dev libgl1-mesa-dev
+  - wget -q https://www.sfml-dev.org/files/SFML-3.0.0-linux-gcc-64-bit.tar.gz
+  - tar -xzf SFML-3.0.0-linux-gcc-64-bit.tar.gz
+  - cd SFML-3.0.0
+  - cmake -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF .
+  - make -j$(nproc)
+  - make install
+  - ldconfig
   - cd $CI_PROJECT_DIR
-
 build_job:
   stage: build
   script:
@@ -33,7 +38,7 @@ build_job:
     expire_in: 1 week
   when: manual
   only:
-    - merge_requests 
+    - merge_requests
 
 test_job:
   stage: test
@@ -43,6 +48,6 @@ test_job:
     - echo "Running tests..."
     - cd $BUILD_DIR
     - ./tests/tests
-  when: manual 
+  when: manual
   only:
     - merge_requests

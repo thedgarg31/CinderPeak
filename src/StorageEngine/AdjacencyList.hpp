@@ -95,8 +95,8 @@ public:
         if (isTypePrimitive<EdgeType>()) {
           LOG_CRITICAL("ID EQUAL");
         }
+        return true;
       }
-      return true;
     }
     return false;
   }
