@@ -10,16 +10,18 @@ variables:
 
 before_script:
   - apt-get update -qq && apt-get install -y -qq
-    wget cmake g++
+    git cmake g++
     libopenal-dev libflac-dev libvorbis-dev
     libudev-dev libxrandr-dev
     libfreetype6-dev libgl1-mesa-dev
-  - wget -q https://www.sfml-dev.org/files/SFML-3.0.0-linux-gcc-64-bit.tar.gz
-  - tar -xzf SFML-3.0.0-linux-gcc-64-bit.tar.gz
-  - cd SFML-3.0.0
-  - cmake -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF .
-  - make -j$(nproc)
-  - make install
+    libx11-dev libxcb1-dev libx11-xcb-dev libxcb-randr0-dev
+    libxcb-image0-dev libglu1-mesa-dev
+  - git clone --depth 1 --branch 3.0 https://github.com/SFML/SFML.git
+  - cd SFML
+  - mkdir build && cd build
+  - cmake -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF ..
+  - cmake --build . --parallel $(nproc)
+  - cmake --install .
   - ldconfig
   - cd $CI_PROJECT_DIR
 build_job:
