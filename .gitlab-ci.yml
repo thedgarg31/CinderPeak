@@ -16,7 +16,7 @@ before_script:
     libfreetype6-dev libgl1-mesa-dev
     libx11-dev libxcb1-dev libx11-xcb-dev libxcb-randr0-dev
     libxcb-image0-dev libglu1-mesa-dev
-  - git clone --depth 1 --branch 3.0 https://github.com/SFML/SFML.git
+  - git clone https://github.com/SFML/SFML.git
   - cd SFML
   - mkdir build && cd build
   - cmake -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF ..
