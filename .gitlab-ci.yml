@@ -24,7 +24,7 @@ build_job:
     - mkdir -p $BUILD_DIR
     - cd $BUILD_DIR
     - echo "Running CMake configuration..."
-    - cmake .. -DBUILD_TESTS=ON -DBUILD_EXAMPLES=ON
+    - cmake .. -DBUILD_TESTS=ON -DBUILD_EXAMPLES=ON -DUSE_SFML=OFF
     - echo "Building the project..."
     - cmake --build .
   artifacts:

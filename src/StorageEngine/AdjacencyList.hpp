@@ -81,7 +81,7 @@ public:
     }
     return std::make_pair(it->second, CinderPeak::PeakStatus::OK());
   }
-  const auto &getAdjList() { return _adj_list; }
+  const auto getAdjList() { return _adj_list; }
   void exc() const { std::cout << "Meow\n"; }
   bool impl_doesEdgeExist(const VertexType &src, const VertexType &dest,
                           const EdgeType &weight = EdgeType()) override {

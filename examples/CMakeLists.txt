@@ -1,4 +1,3 @@
-# Add all example files in `examples/`
 file(GLOB EXAMPLE_SOURCES "*.cpp")
 
 foreach(EXAMPLE_FILE ${EXAMPLE_SOURCES})
