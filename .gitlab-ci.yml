@@ -10,7 +10,7 @@ variables:
 
 before_script:
   - apt-get update -y
-  - apt-get install -y cmake git libgtest-dev build-essential sfml
+  - apt-get install -y cmake git libgtest-dev build-essential libsfml-dev
   - cd /usr/src/gtest
   - cmake .
   - make
