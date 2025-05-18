@@ -1,6 +1,6 @@
 # Building CinderPeak
 
-CinderPeak uses SFML (Simple Fast Multimedia Library) as a dependency for its visualization engine.
+CinderPeak uses SFML (Simple Fast Multimedia Library) as a dependency for its visualization engine. Additionally Google's Testing Framework (GTest) is also used for extensive testing.
 
 
 CinderPeak uses CMake as a build system, however any other build system like Ninja can also be used.
