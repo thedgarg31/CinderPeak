@@ -9,36 +9,22 @@ variables:
   BUILD_DIR: build
 
 before_script:
-  - |
-    apt-get update -qq && apt-get install -y -qq \
-      git cmake g++ \
-      libopenal-dev libflac-dev libvorbis-dev \
-      libudev-dev libxrandr-dev libfreetype6-dev libgl1-mesa-dev \
-      libx11-dev libxcb1-dev libx11-xcb-dev libxcb-randr0-dev libxcb-image0-dev libglu1-mesa-dev \
-      libxcursor-dev libxi-dev \
-    && apt-get clean && rm -rf /var/lib/apt/lists/*
-  - git clone --depth=1 https://github.com/SFML/SFML.git
-  - cd SFML && mkdir build && cd build
-  - cmake -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=ON ..
-  - cmake --build . --parallel $(nproc)
-  - cmake --install .
-  - ldconfig
+  - apt-get update -y
+  - apt-get install -y cmake git libgtest-dev build-essential
+  - cd /usr/src/gtest
+  - cmake .
+  - make
+  - cp lib/*.a /usr/lib
   - cd $CI_PROJECT_DIR
 
 build_job:
   stage: build
   script:
-    - git clone --depth=1 https://github.com/google/googletest.git
-    - cd googletest && cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
-    - cmake --build build --parallel $(nproc)
-    - cmake --install build
-    - cd $CI_PROJECT_DIR
-
     - echo "Creating build directory..."
     - mkdir -p $BUILD_DIR
     - cd $BUILD_DIR
     - echo "Running CMake configuration..."
-    - cmake .. -DBUILD_TESTS=ON -DBUILD_EXAMPLES=ON -DUSE_SFML=OFF
+    - cmake .. -DBUILD_TESTS=ON -DBUILD_EXAMPLES=ON
     - echo "Building the project..."
     - cmake --build .
   artifacts:
