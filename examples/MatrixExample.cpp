@@ -44,6 +44,6 @@ int main()
   mock.addVertex(1);
   mock.addVertex(2);
   mock.addEdge(1, 2 ,10);
-  mock.visualize();
+  // mock.visualize();
   return 0;
 }

@@ -12,8 +12,8 @@ option(USE_SFML "Enable SFML support" ON)
 
 if(USE_SFML)
     set(SFML_STATIC_LIBRARIES ON)  
-    find_package(SFML 3 REQUIRED COMPONENTS Graphics Window System)
-    target_link_libraries(MyProject INTERFACE sfml-graphics sfml-window sfml-system)
+    find_package(SFML 3 REQUIRED COMPONENTS Graphics Window Audio System Network)
+    target_link_libraries(MyProject INTERFACE SFML::Graphics SFML::Audio SFML::Network)
 endif()
 
 option(BUILD_TESTS "Build tests" ON)

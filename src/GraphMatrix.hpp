@@ -49,6 +49,7 @@ public:
     if (ctx->create_options->hasOption(GraphCreationOptions::Unweighted)) {
       LOG_CRITICAL(
           "Cannot call weighted addEdge on a unweighted graph, extra weight");
+          return;
       // throw proper exception
     }
     auto resp = peak_store->addEdge(src, dest, weight);

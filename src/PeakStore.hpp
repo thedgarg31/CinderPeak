@@ -65,6 +65,7 @@ public:
         !status.isOK()) {
       return status;
     }
+    
     ctx->metadata->num_edges++;
     return PeakStatus::OK();
   }
@@ -113,7 +114,15 @@ public:
   void visualize() {
     GraphVisualizer<VertexType, EdgeType> g(
         ctx->adjacency_storage->getAdjList());
-        g.visualize();
+
+      if(isTypePrimitive<VertexType>() && isTypePrimitive<EdgeType>()){
+        // g.print_adj_list();
+        ctx->adjacency_storage->print_adj_list();
+        g.visualize_primitives_graph();
+      }else{
+        LOG_CRITICAL("Primitive type checking failed");
+        // g.visualize();
+      }
   }
 };
 
