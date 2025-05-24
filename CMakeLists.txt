@@ -7,7 +7,6 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 add_library(MyProject INTERFACE)
 target_include_directories(MyProject INTERFACE src/)
 
-# SFML setup for Arch/Manjaro
 option(USE_SFML "Enable SFML support" ON)
 
 if(USE_SFML)
