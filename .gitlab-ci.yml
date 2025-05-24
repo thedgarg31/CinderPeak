@@ -9,12 +9,22 @@ variables:
   BUILD_DIR: build
 
 before_script:
-  - apt-get update -qq && apt-get install -y -qq \
-    git cmake g++ \
-    libopenal-dev libflac-dev libvorbis-dev \
-    libudev-dev libxrandr-dev libfreetype6-dev libgl1-mesa-dev \
-    libx11-dev libxcb1-dev libx11-xcb-dev libxcb-randr0-dev libxcb-image0-dev libglu1-mesa-dev \
-    libxcursor-dev libxi-dev
+  - |
+    apt-get update -qq && apt-get install -y -qq \
+      git cmake g++ \
+      libopenal-dev libflac-dev libvorbis-dev \
+      libudev-dev libxrandr-dev libfreetype6-dev libgl1-mesa-dev \
+      libx11-dev libxcb1-dev libx11-xcb-dev libxcb-randr0-dev libxcb-image0-dev libglu1-mesa-dev \
+      libxcursor-dev libxi-dev \
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
+  - git clone https://github.com/SFML/SFML.git
+  - cd SFML
+  - mkdir build && cd build
+  - cmake -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF ..
+  - cmake --build . --parallel $(nproc)
+  - cmake --install .
+  - ldconfig
+  - cd $CI_PROJECT_DIR
   - git clone https://github.com/SFML/SFML.git
   - cd SFML
   - mkdir build && cd build
