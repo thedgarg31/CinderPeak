@@ -11,7 +11,7 @@ option(USE_SFML "Enable SFML support" ON)
 
 if(USE_SFML)
     set(SFML_STATIC_LIBRARIES ON)  
-    find_package(SFML 3 REQUIRED COMPONENTS Graphics Window Audio System Network)
+    find_package(SFML 3 REQUIRED COMPONENTS Graphics Window Audio System Network REQUIRED)
     target_link_libraries(MyProject INTERFACE SFML::Graphics SFML::Audio SFML::Network)
 endif()
 
