@@ -25,14 +25,7 @@ before_script:
   - cmake --install .
   - ldconfig
   - cd $CI_PROJECT_DIR
-  - git clone https://github.com/SFML/SFML.git
-  - cd SFML
-  - mkdir build && cd build
-  - cmake -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF ..
-  - cmake --build . --parallel $(nproc)
-  - cmake --install .
-  - ldconfig
-  - cd $CI_PROJECT_DIR
+
 build_job:
   stage: build
   script:
