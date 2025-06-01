@@ -1,41 +1,86 @@
-# CinderPeak: Work In Progress.
-CinderPeak is a high-performance, modern C++ graph library designed to support directed, undirected, and mixed graphs with customizable vertex and edge types. The library will feature an integrated visualization engine using SFML (Simple and Fast Multimedia Library) to provide graph rendering. CinderPeak aims to be a comprehensive tool for graph theory applications, offering both algorithmic functionality and visual insights.
+# CinderPeak: A Modern C++ Graph Library (Work in Progress)
 
+CinderPeak is a fast and efficient, open-source C++ graph library designed to handle directed, undirected, and mixed graphs with customizable vertex and edge types. Built with modern C++ (C++17/C++20), it offers a flexible, templated API for graph manipulation and analysis. The library includes an integrated visualization engine powered by SFML, enabling intuitive graph rendering for visual insights. CinderPeak is thread-safe, portable, and optimized for integration into larger projects, making it ideal for graph theory applications, data analysis, and network modeling.
 
-## Development Phases
-### Phase 1 : Initialization (1 week) Completed ✅
-The phase one includes laying out the foundations of the project, phase 1 includes the following tasks.
-<br>
-1. **Project Structure**: We need to plan a scalable project structure which is easy to work with and is scalable in future, and can be easily intergated with a build system like **CMAKE**
-2. **Build System**: We will be using **Cmake** as a build system for cross platform compilation and for faster development.
-3. **Tech Stack**: We will be using modern C++ standards specifically the whole project will be developed in **Modern C++17** standard or above, possibly **C++20** for templates and concepts.
-4. **Performance Concerns**: To write faster and optimized code we need to use modern C++ features such as smart pointers and use STL for storage and algorithms. While designing we also need to use OOP concepts for structuring of code, however this designing part will be discussed and implemted in upcoming phases. With perfomance in mind we also have to keep the intuitive API design in the back of our head.
-5. **Generics**: The whole project will be fully templated and will utilize the C++ templates in a large amount, almost every class will be templated to provide **flexibility and customizations for end user**.
-6. **Testing, Documentation and examples**: This is one of the major parts and one of the easiest, writing documentation will be pretty straight forward, to host the documentation we will be using **docusaurus**. 
-<br>**Testing** is very important therefore we will be using and writing tests since the starting of the development for each feature that we feel is correct. Testing will make the development faster by ensuring that features A,B are not accidentally broken when working on the feature C. We will use **GTest** for writing tests.
-7. **Thread Safety**: Cinder Peak is meant to be portable and easy to be integrated into larger projects, we need to ensure that the library is thread safe, means we need to ensure our code runs correctly when multiple threads access shared resources simultaneously. In short our library should work well with some other asynchronous code.
+## Key Features
+- **Flexible Graph Representations**: Supports adjacency lists, adjacency matrices, and hybrid CSR/COO formats for efficient storage and computation.
+- **Customizable and Templated**: Fully templated design allows users to define custom vertex and edge types for maximum flexibility.
+- **Visualization Engine**: Integrated SFML-based visualizer for rendering graphs in real-time.
+- **Thread Safety**: Designed to work seamlessly with multi-threaded applications, ensuring safe access to shared resources.
+- **High Performance**: Leverages modern C++ features like smart pointers, STL containers, and optimized algorithms for fast execution.
+- **Comprehensive Testing**: Built with Google Test (GTest) to ensure reliability and robustness across features.
+- **Documentation**: Extensive documentation hosted with Docusaurus, including usage guides, examples, and API references.
 
-### Phase 2: Development of PeakStore (2 weeks)
-This phase involves the development of the core engine of CinderPeak for graph storage.
+## Development Notice
 
-# Possible Project Structure
+CinderPeak is actively under development, with ongoing enhancements to its documentation, CI/CD, issues and pull requests, and overall structure. We are committed to delivering a polished and comprehensive release. The stable version, including complete documentation and refined functionalities, is scheduled to be available by **June 12, 2025**. Thank you for your patience and support as we continue to improve the library.
+
+## Project Structure
 ```
-/CinderPeak                 # Project root
-│── /src                    # Source files
-│   ├── GraphBase.hpp       # Abstract base class
-│   ├── GraphList.hpp       # Adjacency List
-│   ├── GraphMatrix.hpp     # Adjacency Matrix
-│   ├── GraphFactory.hpp    # Factory for graph types
-│   ├── Utils.hpp           # Utility functions
-│── /include                # Public API headers
-│   ├── CinderPeak.hpp      # Main API (single entry point)
-│── /tests                  # Unit tests
-│   ├── test_GraphList.cpp  
-│   ├── test_GraphMatrix.cpp  
-│── /benchmarks             # Benchmarking code
-│── /docs                   # Documentation (Docusaurus)
-│── /examples               # Sample usage
-│── CMakeLists.txt          # Build system config
-│── README.md               # Documentation
-│── LICENSE                 # License file
+/CinderPeak
+├── CMakeLists.txt              # Build system configuration
+├── docs                        # Docusaurus documentation
+│   ├── examples
+│   │   └── GraphMatrixExample.md  # Example usage for GraphMatrix
+│   ├── GraphList.md            # Adjacency List documentation
+│   ├── GraphMatrix.md          # Adjacency Matrix documentation
+│   ├── index.md                # Main documentation page
+│   ├── installation.md         # Installation guide
+│   └── usage.md                # Usage guide
+├── examples                    # Sample code demonstrating usage
+│   ├── CMakeLists.txt          # Build config for examples
+│   ├── extras
+│   │   ├── COOExample.cpp      # Coordinate List example
+│   │   ├── CSRExample.cpp      # Compressed Sparse Row example
+│   │   ├── LogExample.cpp      # Logging utility example
+│   │   └── PeakExample.cpp     # General CinderPeak usage example
+│   ├── ListExample1.cpp        # Adjacency List example
+│   ├── MatrixExample.cpp       # Adjacency Matrix example
+│   └── PrimitiveGraph.cpp      # Basic graph example
+├── src                         # Source files
+│   ├── ArialFontDataEmbed.hpp  # Embedded font data for visualization
+│   ├── CinderExceptions.hpp    # Custom exception handling
+│   ├── CinderPeak.hpp          # Main API entry point
+│   ├── GraphList.hpp           # Adjacency List implementation
+│   ├── GraphMatrix.hpp         # Adjacency Matrix implementation
+│   ├── PeakLogger.hpp          # Logging utility
+│   ├── PeakStore.hpp           # Core storage engine
+│   ├── StorageEngine
+│   │   ├── AdjacencyList.hpp   # Adjacency List storage
+│   │   ├── CoordinateList.hpp  # Coordinate List storage
+│   │   ├── ErrorCodes.hpp      # Error handling codes
+│   │   ├── GraphContext.hpp    # Graph context management
+│   │   ├── HybridCSR_COO.hpp   # Hybrid CSR/COO storage
+│   │   └── Utils.hpp           # Utility functions
+│   ├── StorageInterface.hpp    # Storage interface definition
+│   └── Visualizer.hpp          # SFML-based visualization engine
+├── tests                       # Unit tests
+│   ├── AdjacencyShard.cpp      # Tests for adjacency list
+│   ├── CoordinateShard.cpp     # Tests for coordinate list
+│   ├── HybridShard.cpp         # Tests for hybrid CSR/COO
+│   └── tests.cpp               # Main test suite
+├── README.md                   # Project overview and setup
+└── LICENSE                     # License file
 ```
+
+## Getting Started
+1. **Installation**: Follow the [installation guide](docs/installation.md) to set up CinderPeak with CMake.
+2. **Usage**: Check the [usage guide](docs/usage.md) for API details and the [examples](examples/) directory for sample code.
+3. **Documentation**: Explore the full documentation hosted with Docusaurus in the [docs](docs/) directory.
+4. **Contributing**: Contributions are welcome! See the [CONTRIBUTING.md](CONTRIBUTING.md) file for guidelines.
+
+## Build System
+CinderPeak uses CMake for cross-platform compilation, ensuring seamless integration across different environments. The build system is configured to support both development and production workflows, with separate targets for tests, examples, and benchmarks.
+
+## Technology Stack
+- **C++17/C++20**: Leverages modern C++ features like smart pointers, templates, and concepts for performance and flexibility.
+- **SFML**: Powers the visualization engine for rendering graphs.
+- **Google Test**: Ensures robust unit testing for all features.
+- **Docusaurus**: Hosts comprehensive documentation with examples and API references.
+
+## Why CinderPeak?
+CinderPeak stands out for its balance of performance, flexibility, and ease of use. Whether you're building complex network models, analyzing graph-based data, or visualizing relationships, CinderPeak provides a robust and intuitive solution. Its open-source nature encourages community contributions, and its modular design makes it easy to extend for specialized use cases.
+
+
+## Community
+Join the CinderPeak community on [GitHub](https://github.com/SharonIV0X86/CinderPeak) to report issues, suggest features, or contribute code. Check out the [examples](examples/) directory to see CinderPeak in action!
