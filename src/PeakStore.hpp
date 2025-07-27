@@ -121,7 +121,6 @@ public:
     //   g.visualize_primitives_graph();
     // } else {
     //   LOG_CRITICAL("Primitive type checking failed");
-    //   // g.visualize();
     // }
   }
 };
