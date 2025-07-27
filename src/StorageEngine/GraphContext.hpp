@@ -1,10 +1,9 @@
 #pragma once
+#include "PeakLogger.hpp"
 #include "StorageEngine/Utils.hpp"
-#include "PeakLogger.hpp"
-#include <memory>
-#include "PeakLogger.hpp"
 #include "StorageInterface.hpp"
 #include "Visualizer.hpp"
+#include <memory>
 namespace CinderPeak {
 namespace PeakStore {
 
@@ -22,7 +21,8 @@ public:
       nullptr;
   std::shared_ptr<CoordinateList<VertexType, EdgeType>> coordinate_list =
       nullptr;
-  std::shared_ptr<PeakStorageInterface<VertexType, EdgeType>> active_storage = nullptr;
+  std::shared_ptr<PeakStorageInterface<VertexType, EdgeType>> active_storage =
+      nullptr;
 };
 
 } // namespace PeakStore

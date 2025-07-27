@@ -4,14 +4,11 @@ project(CinderPeak LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-# === Output paths ===
 set(BIN_OUTPUT_DIR ${CMAKE_BINARY_DIR}/bin)
 
-# === Core Header-Only Interface Library ===
 add_library(CinderPeak INTERFACE)
 target_include_directories(CinderPeak INTERFACE ${CMAKE_SOURCE_DIR}/src)
 
-# === Enable Tests ===
 option(BUILD_TESTS "Build and run unit tests" ON)
 if(BUILD_TESTS)
     include(FetchContent)

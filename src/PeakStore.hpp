@@ -1,11 +1,11 @@
 #pragma once
+#include "CinderPeak.hpp"
 #include "StorageEngine/AdjacencyList.hpp"
 #include "StorageEngine/CoordinateList.hpp"
 #include "StorageEngine/ErrorCodes.hpp"
 #include "StorageEngine/GraphContext.hpp"
 #include "StorageEngine/HybridCSR_COO.hpp"
 #include "StorageEngine/Utils.hpp"
-#include "CinderPeak.hpp"
 // #include "Visualizer.hpp"
 #include <iostream>
 #include <memory>
@@ -17,7 +17,7 @@ namespace PeakStore {
 
 template <typename VertexType, typename EdgeType> class PeakStore {
 private:
-  std::shared_ptr<GraphContext<VertexType, EdgeType>> ctx;
+  std::shared_ptr<GraphContext<VertexType, EdgeType>> ctx = nullptr;
   void initializeContext(const GraphInternalMetadata &metadata,
                          const GraphCreationOptions &options) {
     ctx->metadata = std::make_shared<GraphInternalMetadata>(metadata);
@@ -44,7 +44,8 @@ private:
 
 public:
   PeakStore(const GraphInternalMetadata &metadata,
-            const GraphCreationOptions &options = CinderPeak::GraphCreationOptions::getDefaultCreateOptions())
+            const GraphCreationOptions &options =
+                CinderPeak::GraphCreationOptions::getDefaultCreateOptions())
       : ctx(std::make_shared<GraphContext<VertexType, EdgeType>>()) {
     Logger::enableConsoleLogging = true;
     initializeContext(metadata, options);

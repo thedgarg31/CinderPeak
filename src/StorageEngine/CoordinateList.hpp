@@ -6,11 +6,11 @@
 #include <unordered_set>
 
 namespace CinderPeak {
-  template <typename, typename>
-class PeakStorageInterface;
+template <typename, typename> class PeakStorageInterface;
 namespace PeakStore {
-template <typename VertexType, typename EdgeType> 
-class CoordinateList : public CinderPeak::PeakStorageInterface<VertexType, EdgeType> {
+template <typename VertexType, typename EdgeType>
+class CoordinateList
+    : public CinderPeak::PeakStorageInterface<VertexType, EdgeType> {
 private:
   std::vector<VertexType> coo_src;
   std::vector<VertexType> coo_dest;
@@ -18,9 +18,7 @@ private:
   std::unordered_set<VertexType, VertexHasher<VertexType>> vertices;
 
 public:
-  CoordinateList(){
-    impl_BuildCoordinateList();
-  }
+  CoordinateList() { impl_BuildCoordinateList(); }
   void impl_BuildCoordinateList() {
     LOG_INFO("Inside COO:BuildCoordinateList");
     coo_src.clear();
@@ -32,20 +30,23 @@ public:
     LOG_INFO("Inside COO:addVertex");
     auto [_, inserted] = vertices.insert(vertex);
     if (!inserted) {
-        return PeakStatus::AlreadyExists();
+      return PeakStatus::AlreadyExists();
     }
     return PeakStatus::OK();
   }
-  bool impl_doesEdgeExist(const VertexType& src, const VertexType& dest, const EdgeType& weight)  override {
+  bool impl_doesEdgeExist(const VertexType &src, const VertexType &dest,
+                          const EdgeType &weight) override {
     LOG_WARNING("Called unimplemented doesEdgeExist");
     return false;
   }
-  bool impl_doesEdgeExist(const VertexType& src, const VertexType& dest)  override {
+  bool impl_doesEdgeExist(const VertexType &src,
+                          const VertexType &dest) override {
     LOG_WARNING("Called unimplemented doesEdgeExist");
     return false;
   }
 
-  const PeakStatus impl_addEdge(const VertexType &src, const VertexType &dest) override {
+  const PeakStatus impl_addEdge(const VertexType &src,
+                                const VertexType &dest) override {
     LOG_INFO("Inside unweighted COO:addEdge");
     vertices.insert(src);
     vertices.insert(dest);
@@ -53,12 +54,13 @@ public:
     coo_src.push_back(src);
     coo_dest.push_back(dest);
     // Add default weight
-    coo_weights.push_back(EdgeType());//  this has to be changed later for complex types or primitives, ow lawd.
+    coo_weights.push_back(EdgeType()); //  this has to be changed later for
+                                       //  complex types or primitives, ow lawd.
     return PeakStatus::OK();
-}
+  }
 
   const PeakStatus impl_addEdge(const VertexType &src, const VertexType &dest,
-                          const EdgeType &weight) override {
+                                const EdgeType &weight) override {
 
     LOG_INFO("Inside weighted COO:addEdge");
     vertices.insert(src);
@@ -71,9 +73,9 @@ public:
     return PeakStatus::OK();
   }
 
-  const std::pair<EdgeType, PeakStatus> impl_getEdge(const VertexType &src,
-                                               const VertexType &dest) override{
-    
+  const std::pair<EdgeType, PeakStatus>
+  impl_getEdge(const VertexType &src, const VertexType &dest) override {
+
     LOG_INFO("Inside COO:getEdge");
     for (size_t i = 0; i < coo_src.size(); ++i) {
       if (coo_src[i] == src && coo_dest[i] == dest) {
@@ -114,7 +116,7 @@ public:
   }
   std::pair<PeakStatus, bool> impl_hasEdge(const VertexType &src,
                                            const VertexType &dest) {
-   LOG_INFO("Inside COO:hasEdge");
+    LOG_INFO("Inside COO:hasEdge");
     for (size_t i = 0; i < coo_src.size(); ++i) {
       if (coo_src[i] == src && coo_dest[i] == dest) {
         return {PeakStatus::OK(), true};

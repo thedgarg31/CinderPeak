@@ -29,10 +29,12 @@ public:
   inline static PeakStatus NotFound(std::string msg = "Not Found") {
     return PeakStatus(StatusCode::NOT_FOUND, std::move(msg));
   }
-  inline static PeakStatus InvalidArgument(std::string msg = "Invalid Argument") {
+  inline static PeakStatus
+  InvalidArgument(std::string msg = "Invalid Argument") {
     return PeakStatus(StatusCode::INVALID_ARGUMENT, std::move(msg));
   }
-  inline static PeakStatus VertexAlreadyExists(std::string msg = "Vertex Already Exists") {
+  inline static PeakStatus
+  VertexAlreadyExists(std::string msg = "Vertex Already Exists") {
     return PeakStatus(StatusCode::VERTEX_ALREADY_EXISTS, std::move(msg));
   }
   inline static PeakStatus AlreadyExists(std::string msg = "Already Exists") {
@@ -44,15 +46,18 @@ public:
   inline static PeakStatus EdgeNotFound(std::string msg = "Edge Not Found") {
     return PeakStatus(StatusCode::EDGE_NOT_FOUND, std::move(msg));
   }
-  inline static PeakStatus VertexNotFound(std::string msg = "Vertex Not Found") {
+  inline static PeakStatus
+  VertexNotFound(std::string msg = "Vertex Not Found") {
     return PeakStatus(StatusCode::VERTEX_NOT_FOUND, std::move(msg));
   }
-  inline static PeakStatus MethodNotImplemented(std::string msg = "Method is not implemented, there has been an error."){
+  inline static PeakStatus MethodNotImplemented(
+      std::string msg = "Method is not implemented, there has been an error.") {
     return PeakStatus(StatusCode::UNIMPLEMENTED, std::move(msg));
-  } 
-  inline static PeakStatus EdgeAlreadyExists(std::string msg = "Edge Already Exists"){
+  }
+  inline static PeakStatus
+  EdgeAlreadyExists(std::string msg = "Edge Already Exists") {
     return PeakStatus(StatusCode::EDGE_ALREADY_EXISTS, std::move(msg));
-  } 
+  }
   bool isOK() const { return code_ == StatusCode::OK; }
   StatusCode code() const { return code_; }
   std::string message() const { return message_; }

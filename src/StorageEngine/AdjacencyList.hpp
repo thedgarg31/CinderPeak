@@ -37,28 +37,31 @@ public:
   }
   const PeakStatus impl_addVertex(const VertexType &src) override {
     if constexpr (is_primitive_or_string_v<VertexType>) {
-        auto it = _adj_list.find(src);
-        if (it != _adj_list.end()) {
-            LOG_WARNING("Vertex already exists with primitive type");
-            return PeakStatus::VertexAlreadyExists("Primitive Vertex Already Exists");
-        }
-        LOG_DEBUG("Unmatched vertices");
-        LOG_INFO("Inside primitive block");
+      auto it = _adj_list.find(src);
+      if (it != _adj_list.end()) {
+        LOG_WARNING("Vertex already exists with primitive type");
+        return PeakStatus::VertexAlreadyExists(
+            "Primitive Vertex Already Exists");
+      }
+      LOG_DEBUG("Unmatched vertices");
+      LOG_INFO("Inside primitive block");
     } else {
-        auto it = _adj_list.find(src);
-        if (it != _adj_list.end()) {
-            const VertexType& existingVertex = it->first;
-            if (existingVertex.__id_ == src.__id_) {
-              LOG_DEBUG("Matching vertex IDs");
-              return PeakStatus::VertexAlreadyExists("Non Primitive Vertex Already Exists");
-            }
+      auto it = _adj_list.find(src);
+      if (it != _adj_list.end()) {
+        const VertexType &existingVertex = it->first;
+        if (existingVertex.__id_ == src.__id_) {
+          LOG_DEBUG("Matching vertex IDs");
+          return PeakStatus::VertexAlreadyExists(
+              "Non Primitive Vertex Already Exists");
         }
-        LOG_INFO("Inside non primitive block");
+      }
+      LOG_INFO("Inside non primitive block");
     }
     _adj_list[src] = std::vector<std::pair<VertexType, EdgeType>>();
     return PeakStatus::OK();
-}
-  bool impl_doesEdgeExist(const VertexType& src, const VertexType& dest) override {
+  }
+  bool impl_doesEdgeExist(const VertexType &src,
+                          const VertexType &dest) override {
     LOG_WARNING("Called unimplemented doesEdgeExist");
     return false;
   }
@@ -104,17 +107,15 @@ public:
     }
     return false;
   }
-  void print_adj_list()
-    {
-      for (const auto &[first, second] : _adj_list)
-      {
-        std::cout << "Vertex: " << first << "'s adj list:\n";
-        for (const auto &pr : second)
-        {
-          std::cout << "  Neighbor: " << pr.first << " Weight: " << pr.second << "\n";
-        }
+  void print_adj_list() {
+    for (const auto &[first, second] : _adj_list) {
+      std::cout << "Vertex: " << first << "'s adj list:\n";
+      for (const auto &pr : second) {
+        std::cout << "  Neighbor: " << pr.first << " Weight: " << pr.second
+                  << "\n";
       }
     }
+  }
 };
 } // namespace PeakStore
 
