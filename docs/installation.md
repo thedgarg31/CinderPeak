@@ -59,7 +59,7 @@ This configuration is ideal for using CinderPeak as a library dependency in othe
 ## Output Structure
 
 After building, the compiled binaries can be found in the following directories:
-- **Examples**: build/examples/
-- **Tests**: build/tests/
+- **Examples**: build/bin/examples/
+- **Tests**: build/bin/tests/
 
 Make sure all dependencies like SFML and GTest are correctly installed or discoverable by CMake.
