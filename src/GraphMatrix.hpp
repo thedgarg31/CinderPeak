@@ -130,7 +130,8 @@ namespace CinderPeak
     void visualize()
     {
       LOG_INFO("Called GraphMatrix:visualize");
-      peak_store->visualize();
+      
+      // peak_store->visualize();
     }
 
     EdgeAccessor<VertexType, EdgeType> operator[](const VertexType &src)

@@ -45,6 +45,7 @@ int main()
   mock.addVertex(1);
   mock.addVertex(2);
   mock.addEdge(1, 2 ,10);
+  std::cout << "Edge dete: " << mock[1][2] << "\n";
   // mock.visualize();
   return 0;
 }

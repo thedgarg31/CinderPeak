@@ -1,27 +1,56 @@
 cmake_minimum_required(VERSION 3.14)
-project(MyProject LANGUAGES CXX)
+project(CinderPeak LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-add_library(MyProject INTERFACE)
-target_include_directories(MyProject INTERFACE src/)
+# === Output paths ===
+set(BIN_OUTPUT_DIR ${CMAKE_BINARY_DIR}/bin)
 
-option(USE_SFML "Enable SFML support" ON)
+# === Core Header-Only Interface Library ===
+add_library(CinderPeak INTERFACE)
+target_include_directories(CinderPeak INTERFACE ${CMAKE_SOURCE_DIR}/src)
 
-if(USE_SFML)
-    set(SFML_STATIC_LIBRARIES ON)  
-    find_package(SFML 3 REQUIRED COMPONENTS Graphics Window Audio System Network REQUIRED)
-    target_link_libraries(MyProject INTERFACE SFML::Graphics SFML::Audio SFML::Network)
-endif()
-
-option(BUILD_TESTS "Build tests" ON)
+# === Enable Tests ===
+option(BUILD_TESTS "Build and run unit tests" ON)
 if(BUILD_TESTS)
+    include(FetchContent)
+    FetchContent_Declare(
+        googletest
+        URL https://github.com/google/googletest/archive/refs/tags/v1.14.0.zip
+    )
+    set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+    FetchContent_MakeAvailable(googletest)
+
     enable_testing()
-    add_subdirectory(tests)
+
+    file(GLOB TEST_SOURCES ${CMAKE_SOURCE_DIR}/tests/*.cpp)
+    foreach(test_file ${TEST_SOURCES})
+        get_filename_component(test_name ${test_file} NAME_WE)
+        add_executable(${test_name}_test ${test_file})
+        target_link_libraries(${test_name}_test PRIVATE CinderPeak GTest::gtest_main)
+
+        # Set binary output to bin/tests
+        set_target_properties(${test_name}_test PROPERTIES
+            RUNTIME_OUTPUT_DIRECTORY ${BIN_OUTPUT_DIR}/tests
+        )
+
+        add_test(NAME ${test_name} COMMAND ${BIN_OUTPUT_DIR}/tests/${test_name}_test)
+    endforeach()
 endif()
 
-option(BUILD_EXAMPLES "Build examples" ON)
+# === Build Examples ===
+option(BUILD_EXAMPLES "Build example programs" ON)
 if(BUILD_EXAMPLES)
-    add_subdirectory(examples)
+    file(GLOB_RECURSE EXAMPLE_SOURCES CONFIGURE_DEPENDS ${CMAKE_SOURCE_DIR}/examples/*.cpp)
+    foreach(example ${EXAMPLE_SOURCES})
+        get_filename_component(example_name ${example} NAME_WE)
+        add_executable(${example_name}_example ${example})
+        target_link_libraries(${example_name}_example PRIVATE CinderPeak)
+
+        # Set binary output to bin/examples
+        set_target_properties(${example_name}_example PROPERTIES
+            RUNTIME_OUTPUT_DIRECTORY ${BIN_OUTPUT_DIR}/examples
+        )
+    endforeach()
 endif()
