@@ -1,3 +1,5 @@
+// Temporarily Depreciated. Unused.
+
 #pragma once
 #include "ArialFontDataEmbed.hpp"
 #include <SFML/Graphics.hpp>
