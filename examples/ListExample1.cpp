@@ -16,4 +16,6 @@ int main()
     graph.addEdge(1, 4, 9);
     graph.addEdge(4, 5, 7);
     graph.addEdge(1, 2, 6);
+
+    // graph.visualize();
 }
