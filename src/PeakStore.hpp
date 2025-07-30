@@ -1,7 +1,6 @@
 #pragma once
 #include "CinderPeak.hpp"
 #include "StorageEngine/AdjacencyList.hpp"
-#include "StorageEngine/CoordinateList.hpp"
 #include "StorageEngine/ErrorCodes.hpp"
 #include "StorageEngine/GraphContext.hpp"
 #include "StorageEngine/HybridCSR_COO.hpp"
@@ -26,8 +25,8 @@ private:
         std::make_shared<HybridCSR_COO<VertexType, EdgeType>>();
     ctx->adjacency_storage =
         std::make_shared<AdjacencyList<VertexType, EdgeType>>();
-    ctx->coordinate_list =
-        std::make_shared<CoordinateList<VertexType, EdgeType>>();
+    // ctx->coordinate_list =
+    //     std::make_shared<CoordinateList<VertexType, EdgeType>>();
 
     if (ctx->metadata->graph_type == "graph_matrix") {
       ctx->active_storage = ctx->adjacency_storage;

@@ -1,6 +1,5 @@
 #pragma once
 #include "StorageEngine/AdjacencyList.hpp"
-#include "StorageEngine/CoordinateList.hpp"
 #include "StorageEngine/ErrorCodes.hpp"
 #include "StorageEngine/HybridCSR_COO.hpp"
 #include "StorageEngine/Utils.hpp"
