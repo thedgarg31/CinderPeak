@@ -19,8 +19,3 @@ body:
       label: Describe alternatives you've considered
       placeholder: >
         A clear and concise description of any alternative solutions or features you've considered.
-  - type: textarea
-    attributes:
-      label: Additional context
-      placeholder: >
-        Add any other context or screenshots about the feature request here.
