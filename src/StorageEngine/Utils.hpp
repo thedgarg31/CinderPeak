@@ -147,7 +147,7 @@ public:
 size_t CinderPeak::CinderVertex::nextId = 1;
 size_t CinderPeak::CinderEdge::nextId = 1;
 
-namespace PeakStore {
+namespace PeakNamespace {
 class GraphInternalMetadata {
 public:
   size_t density;
@@ -171,7 +171,7 @@ public:
   // default ctor for basic testing, this has to be removed later on.
   GraphInternalMetadata() {}
 };
-} // namespace PeakStore
+} // namespace PeakNamespace
 namespace Exceptions {
 inline void handle_exception_map(const PeakStatus &status) {
   switch (static_cast<int>(status.code())) {
