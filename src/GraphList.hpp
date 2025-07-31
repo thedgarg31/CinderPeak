@@ -1,10 +1,8 @@
 #pragma once
+#include "PeakStore.hpp"
 #include "StorageEngine/Utils.hpp"
 #include <iostream>
 namespace CinderPeak {
-namespace PeakStore {
-template <typename VertexType, typename EdgeType> class PeakStore;
-}
 class CinderGraph;
 template <typename VertexType, typename EdgeType> class GraphList {
 private:
