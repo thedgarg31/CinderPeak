@@ -4,6 +4,15 @@ Welcome to CinderPeak, a graph library designed to simplify graph representation
 
 ---
 
+## Important Note.
+CinderPeak is a seriously complex and high-impact project. Contributions are welcome, but only from those who are committed to quality and understand the stakes.
+- If you're submitting code or proposing a change, be absolutely sure about it. Understand what you're doing, why you're doing it, and how it affects the system as a whole.
+- You must provide a detailed explanation of the implementation, including reasoning, design choices, and expected behavior.
+- During code reviews, be prepared to answer tough questions and justify every decision. If you cannot clearly explain your changes under scrutiny, they will not be accepted.
+- You may use AI tools for assistance, but sloppy, unverified, or low-effort code will be rejected outright.
+> ⚠️ This is not a sandbox. You are expected to treat every line of code with care, precision, and respect for the project’s complexity.
+
+**If you touch something, you should know it inside out**. That’s the minimum bar.
 
 ## How to Contribute
 1. **Create a issue**: If you have a suggestion for an enhancement, a feature you'd like to see added, or a fix for some problem related to existing code, then please open an issue in our repository's issues section. [issues](https://github.com/SharonIV0x86/CinderPeak/issues/new) .
