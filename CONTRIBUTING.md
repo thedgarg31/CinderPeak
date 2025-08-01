@@ -27,6 +27,7 @@ Welcome to CinderPeak, a graph library designed to simplify graph representation
 
 ## Issue Management:
 3. **Issue Assignment**: 
+    - You can only work on a issue if it has been assigned to you. The person who comments first on a issue to get it assigned to them will be assigned to them. For issue assignment we work on a fair first come first come basis. If you open a PR for a issue which has not been assigned to you, it will **not** be accepted/merged.
     - If you are already assigned to one of the issues, you must get its corresponding pull request at least **approved** regardless if its merged or not. If your PR is at least approved only then you can start working on a new issue and get it assigned to you.
 4. **Inactive Issues**:
     - Issues that remain inactive for **3 days** after assignment will be marked as stale and **12 hours** after being marked as stale the issue will be reassigned to another contributor to ensure timely resolution.
