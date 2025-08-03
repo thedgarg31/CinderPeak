@@ -104,7 +104,6 @@ public:
     }
     return data;
   }
-
   void visualize() {
     LOG_INFO("Called GraphMatrix:visualize");
   }
