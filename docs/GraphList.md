@@ -4,7 +4,7 @@
 
 The `GraphList` class, part of the `CinderPeak` namespace, provides a flexible and type-safe graph data structure for managing vertices and edges. It supports both weighted and unweighted graphs, as well as directed and undirected configurations, based on options specified during graph creation. The implementation leverages a `PeakStore` backend to handle the underlying storage and operations, ensuring efficient vertex and edge management.
 
-The `GraphList` class is templated to allow customization of vertex (`VertexType`) and edge (`EdgeType`) data types, making it versatile for various applications, such as social networks, road networks, or dependency graphs. It includes methods for adding vertices and edges, retrieving edge weights, and visualizing the graph.
+The `GraphList` class is templated to allow customization of vertex (`VertexType`) and edge (`EdgeType`) data types, making it versatile for various applications, such as social networks, road networks, or dependency graphs. It includes methods for adding vertices and edges, retrieving edge weights.
 
 ## Class Definition
 
@@ -21,7 +21,6 @@ public:
     void addEdge(const VertexType &src, const VertexType &dest);
     void addEdge(const VertexType &src, const VertexType &dest, const EdgeType &weight);
     EdgeType getEdge(const VertexType &src, const VertexType &dest);
-    void visualize();
 };
 }
 ```
@@ -72,11 +71,6 @@ public:
 - **Returns**: The edge weight of type `EdgeType` if the edge exists; otherwise, a default-constructed `EdgeType` is returned if an error occurs.
 - **Behavior**: Queries the `PeakStore` for the edge weight. Logs a message and handles errors via `Exceptions::handle_exception_map`.
 
-### `void visualize()`
-- **Description**: Visualizes the graph using the `PeakStore` backend.
-- **Behavior**: Delegates visualization to the `PeakStore::visualize` method. Logs a message indicating the call.
-- **Note**: The exact visualization output depends on the `PeakStore` implementation (e.g., console output, graphical rendering).
-
 ## GraphCreationOptions
 
 The `GraphCreationOptions` class (assumed to be defined in `CinderPeak`) allows configuration of the graph's properties. Common options include:
@@ -89,7 +83,7 @@ The `GraphCreationOptions` class (assumed to be defined in `CinderPeak`) allows 
 ## Usage Examples
 
 ### Example 1: Basic Weighted Directed Graph
-This example creates a directed, weighted graph with integer vertices and edges, adds vertices and edges, and visualizes the graph.
+This example creates a directed, weighted graph with integer vertices and edges, adds vertices and edges.
 
 ```cpp
 #include "CinderPeak.hpp"
@@ -110,7 +104,6 @@ int main() {
     graph.addEdge(4, 5, 7);
     graph.addEdge(1, 2, 6);
 
-    graph.visualize();
     return 0;
 }
 ```
@@ -119,7 +112,6 @@ int main() {
 - Creates a directed, weighted graph.
 - Adds vertices `1` to `5`.
 - Adds weighted edges (e.g., `1 -> 3` with weight `10`).
-- Visualizes the graph structure.
 
 ### Example 2: Unweighted Undirected Graph
 This example demonstrates an undirected, unweighted graph with string vertices.
@@ -142,7 +134,6 @@ int main() {
     graph.addEdge("C", "D");
     graph.addEdge("D", "A");
 
-    graph.visualize();
     return 0;
 }
 ```
@@ -151,7 +142,6 @@ int main() {
 - Creates an undirected, unweighted graph with string vertices.
 - Adds vertices labeled `"A"`, `"B"`, `"C"`, and `"D"`.
 - Adds unweighted edges to form a cycle (`A-B-C-D-A`).
-- Visualizes the graph.
 
 ### Example 3: Weighted Graph with Edge Retrieval
 This example creates a weighted graph, adds edges, and retrieves an edge weight.
@@ -174,7 +164,6 @@ int main() {
     double weight = graph.getEdge(1, 2);
     std::cout << "Weight of edge 1->2: " << weight << std::endl;
 
-    graph.visualize();
     return 0;
 }
 ```
@@ -184,7 +173,6 @@ int main() {
 - Adds vertices `1`, `2`, and `3`.
 - Adds weighted edges (`1 -> 2` with weight `5.5`, `2 -> 3` with weight `3.2`).
 - Retrieves and prints the weight of the edge `1 -> 2`.
-- Visualizes the graph.
 
 ### Example 4: Error Handling for Invalid Edge Addition
 This example demonstrates error handling when attempting to add an unweighted edge to a weighted graph.
@@ -205,8 +193,6 @@ int main() {
 
     // Correctly add a weighted edge
     graph.addEdge(1, 2, 10);
-
-    graph.visualize();
     return 0;
 }
 ```
@@ -216,14 +202,10 @@ int main() {
 - Adds vertices `1` and `2`.
 - Attempts to add an unweighted edge, which logs a critical error (as the graph is weighted).
 - Correctly adds a weighted edge (`1 -> 2` with weight `10`).
-- Visualizes the graph.
 
 ## Notes
 - **Error Handling**: The `GraphList` class uses `Exceptions::handle_exception_map` to manage errors from `PeakStore` operations. Ensure that the `Exceptions` namespace is properly configured to handle errors gracefully.
 - **Type Safety**: The `VertexType` and `EdgeType` must be compatible with the `PeakStore` backend and support operations like default construction (for `getEdge` error cases).
-- **Visualization**: The `visualize` method's output depends on the `PeakStore` implementation, which may vary (e.g., text-based, graphical).
-- **Constraints**: Ensure that edge operations match the graph's weighted/unweighted configuration to avoid runtime errors.
-
 ## Dependencies
 - `CinderPeak.hpp`: Provides `GraphCreationOptions`, `PeakStore`, and related utilities.
 - `StorageEngine/Utils.hpp`: Likely provides utility functions like `isTypePrimitive`.
@@ -231,7 +213,6 @@ int main() {
 
 ## Limitations
 - The `EdgeType` parameter is required even for unweighted graphs, though it is unused in such cases.
-- The visualization output is implementation-dependent and may require additional setup for graphical rendering.
 - Error messages are logged but not propagated to the caller, relying on `Exceptions::handle_exception_map`.
 
 This documentation provides a complete reference for using the `GraphList` class, with examples covering common use cases and edge cases.
