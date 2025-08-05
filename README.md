@@ -33,7 +33,7 @@ A fast and efficient, open-source C++ graph library built to handle a wide range
 
 ## 🗓️ Development Notice
 
-CinderPeak is currently under active development. We are committed to delivering a polished and comprehensive release. The stable version, with refined functionalities and complete documentation, is scheduled to be available by **June 12, 2025**.
+CinderPeak is currently under active development. We are committed to delivering a polished and comprehensive release. The stable version, with refined functionalities and complete documentation, is scheduled to be available soon.
 
 ---
 
