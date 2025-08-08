@@ -58,11 +58,14 @@ jobs:
       with:
         cmake-version: '3.20'
 
+    - name: Setup Ninja
+      uses: seanmiddleditch/gha-setup-ninja@master
+
     - name: Setup MSVC
-      uses: microsoft/setup-msbuild@v1.1
+      uses: ilammy/msvc-dev-cmd@v1
 
     - name: Configure CMake
-      run: cmake -S . -B build -DBUILD_TESTS=OFF -DBUILD_EXAMPLES=OFF
+      run: cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTS=OFF -DBUILD_EXAMPLES=OFF
 
     - name: Build
-      run: cmake --build build --config Release
+      run: cmake --build build
