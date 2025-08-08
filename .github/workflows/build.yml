@@ -58,8 +58,18 @@ jobs:
       with:
         cmake-version: '3.20'
 
+    - name: Debug - List files
+      run: |
+        Get-ChildItem -Path . -Recurse -Name
+        Write-Host "CMake version:"
+        cmake --version
+
     - name: Configure CMake
-      run: cmake -S . -B build -G "Visual Studio 17 2022" -A x64 -DBUILD_TESTS=OFF -DBUILD_EXAMPLES=OFF
+      run: |
+        Write-Host "Configuring with Visual Studio 17 2022..."
+        cmake -S . -B build -G "Visual Studio 17 2022" -A x64 -DBUILD_TESTS=OFF -DBUILD_EXAMPLES=OFF -DCMAKE_VERBOSE_MAKEFILE=ON
 
     - name: Build
-      run: cmake --build build --config Release
+      run: |
+        Write-Host "Building Release configuration..."
+        cmake --build build --config Release --verbose
