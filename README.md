@@ -30,7 +30,54 @@ A fast and efficient, open-source C++ graph library built to handle a wide range
 - **Extensive Documentation** - Detailed usage guides, examples, and API references are hosted with Docusaurus.
 
 ---
+# Example
+```cpp
+#include <iostream>
+#include "CinderPeak.hpp"
 
+using namespace CinderPeak::PeakStore;
+using namespace CinderPeak;
+
+// Custom vertex & edge
+class CustomVertex : public CinderVertex {
+public:
+    int data;
+    CustomVertex(int d = 0) : data(d) {}
+};
+class CustomEdge : public CinderEdge {
+public:
+    int weight;
+    CustomEdge(int w = 0) : weight(w) {}
+};
+
+int main() {
+    GraphCreationOptions opts({
+        GraphCreationOptions::Undirected,
+        GraphCreationOptions::Weighted
+    });
+
+    // --- Custom Types ---
+    GraphMatrix<CustomVertex, CustomEdge> customGraph(opts);
+    CustomVertex A(1), B(2);
+    customGraph.addVertex(A);
+    customGraph.addVertex(B);
+    customGraph[A][B] = CustomEdge(1290);
+    std::cout << "CustomGraph Edge Weight: "
+              << customGraph.getEdge(A, B).weight << "\n";
+
+    // --- Primitive Types ---
+    GraphMatrix<int, int> intGraph(opts);
+    intGraph.addVertex(1);
+    intGraph.addVertex(2);
+    intGraph.addEdge(1, 2, 10);
+    std::cout << "IntGraph Edge Weight: " << intGraph[1][2] << "\n";
+
+    return 0;
+}
+```
+
+
+---
 ## 🗓️ Development Notice
 
 CinderPeak is currently under active development. We are committed to delivering a polished and comprehensive release. The stable version, with refined functionalities and complete documentation, is scheduled to be available soon.
