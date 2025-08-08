@@ -64,14 +64,14 @@ public:
                           const VertexType &dest) override {
     auto it = _adj_list.find(src);
     if (it == _adj_list.end()) { // Vertex 'src' not found
-        return false;
+      return false;
     }
-    
+
     const auto &neighbors = it->second;
     for (const auto &[neighbor, edge] : neighbors) {
-        if (neighbor == dest) {// Edge exists
-            return true;
-        }
+      if (neighbor == dest) { // Edge exists
+        return true;
+      }
     }
     return false;
   }

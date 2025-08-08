@@ -104,9 +104,7 @@ public:
     }
     return data;
   }
-  void visualize() {
-    LOG_INFO("Called GraphMatrix:visualize");
-  }
+  void visualize() { LOG_INFO("Called GraphMatrix:visualize"); }
 
   EdgeAccessor<VertexType, EdgeType> operator[](const VertexType &src) {
     return EdgeAccessor<VertexType, EdgeType>(*this, src);

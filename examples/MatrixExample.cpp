@@ -1,28 +1,25 @@
-#include <iostream>
 #include "CinderPeak.hpp"
+#include <iostream>
 // #include "PeakStore.hpp"
 // #include "GraphMatrix.hpp"
 using namespace CinderPeak::PeakStore;
 using namespace CinderPeak;
 
-class CustomVertex : public CinderVertex
-{
+class CustomVertex : public CinderVertex {
 public:
   int data;
 
 public:
   CustomVertex() {}
 };
-class CustomEdge : public CinderEdge
-{
+class CustomEdge : public CinderEdge {
 public:
   int dd;
 
 public:
   CustomEdge() {}
 };
-int main()
-{
+int main() {
   GraphCreationOptions options({GraphCreationOptions::Undirected,
                                 GraphCreationOptions::Weighted,
                                 GraphCreationOptions::SelfLoops});
@@ -40,12 +37,12 @@ int main()
   myGraph[v1][v2] = e;
   CustomEdge edge = myGraph.getEdge(v1, v2);
   std::cout << "Edge between v1 and v2: " << edge.dd << "\n";
-  
+
   GraphMatrix<int, int> mock(options);
   mock.addVertex(1);
   mock.addVertex(2);
-  mock.addEdge(1, 2 ,10);
+  mock.addEdge(1, 2, 10);
   std::cout << "Edge dete: " << mock[1][2] << "\n";
-  
+
   return 0;
 }
