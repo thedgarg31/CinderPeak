@@ -4,6 +4,15 @@ Welcome to CinderPeak, a graph library designed to simplify graph representation
 
 ---
 
+## Important Note.
+CinderPeak is a seriously complex and high-impact project. Contributions are welcome, but only from those who are committed to quality and understand the stakes.
+- If you're submitting code or proposing a change, be absolutely sure about it. Understand what you're doing, why you're doing it, and how it affects the system as a whole.
+- You must provide a detailed explanation of the implementation, including reasoning, design choices, and expected behavior.
+- During code reviews, be prepared to answer tough questions and justify every decision. If you cannot clearly explain your changes under scrutiny, they will not be accepted.
+- You may use AI tools for assistance, but sloppy, unverified, or low-effort code will be rejected outright.
+> ⚠️ This is not a sandbox. You are expected to treat every line of code with care, precision, and respect for the project’s complexity.
+
+**If you touch something, you should know it inside out**. That’s the minimum bar.
 
 ## How to Contribute
 1. **Create a issue**: If you have a suggestion for an enhancement, a feature you'd like to see added, or a fix for some problem related to existing code, then please open an issue in our repository's issues section. [issues](https://github.com/SharonIV0x86/CinderPeak/issues/new) .
@@ -27,6 +36,7 @@ Welcome to CinderPeak, a graph library designed to simplify graph representation
 
 ## Issue Management:
 3. **Issue Assignment**: 
+    - You can only work on a issue if it has been assigned to you. The person who comments first on a issue to get it assigned to them will be assigned to them. For issue assignment we work on a fair first come first come basis. If you open a PR for a issue which has not been assigned to you, it will **not** be accepted/merged.
     - If you are already assigned to one of the issues, you must get its corresponding pull request at least **approved** regardless if its merged or not. If your PR is at least approved only then you can start working on a new issue and get it assigned to you.
 4. **Inactive Issues**:
     - Issues that remain inactive for **3 days** after assignment will be marked as stale and **12 hours** after being marked as stale the issue will be reassigned to another contributor to ensure timely resolution.

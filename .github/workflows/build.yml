@@ -10,9 +10,19 @@ on:
       - main
 
 jobs:
+<<<<<<< HEAD
   build-linux:
     runs-on: ubuntu-latest
     
+=======
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        build_type: [Debug, Release]
+
+>>>>>>> 7c7a374936e3e8e2af4c475d6444666bbe091e75
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
@@ -23,6 +33,7 @@ jobs:
         cmake-version: '3.20'
 
     - name: Configure CMake
+<<<<<<< HEAD
       run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTS=OFF -DBUILD_EXAMPLES=OFF
 
     - name: Build
@@ -63,3 +74,9 @@ jobs:
 
     - name: Build
       run: cmake --build build --config Release
+=======
+      run: cmake -S . -B build -DCMAKE_BUILD_TYPE=${{ matrix.build_type }} -DBUILD_TESTS=OFF -DBUILD_EXAMPLES=OFF
+
+    - name: Build
+      run: cmake --build build --config ${{ matrix.build_type }}
+>>>>>>> 7c7a374936e3e8e2af4c475d6444666bbe091e75
